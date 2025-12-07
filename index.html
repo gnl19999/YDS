@@ -623,6 +623,170 @@
         });
         
     </script>
+    // --- YENİ EKLEME BAŞLANGICI: Akademik Fiiller Veri Yapısı ve Entegrasyonu ---
+
+const data = {
+    "Akademik Fiiller": {
+        "total_words": 50, // Toplam kelime sayısı güncellendi (Sadece Ünite 1 için)
+        "learned_words": 0, // Başlangıçta 0 olarak ayarlandı
+        "units": [
+            {
+                "unit_number": 1,
+                "unit_title": "Temel Akademik Kavramlar",
+                "words_in_unit": 50,
+                "learned_in_unit": 0,
+                "color_class": "u2", // Ünite 1 için mavi renk (u2) seçildi.
+                "words": [
+                    { "en": "Analyze", "pr": "enılayz", "tr": "Analiz Etmek" },
+                    { "en": "Identify", "pr": "aydentifay", "tr": "Tanımlamak, Belirlemek" },
+                    { "en": "Determine", "pr": "dıtörmin", "tr": "Saptamak, Karar Vermek" },
+                    { "en": "Establish", "pr": "estebliş", "tr": "Kurmak, Oluşturmak, Saptamak" },
+                    { "en": "Investigate", "pr": "invesztigeyt", "tr": "Araştırmak, İncelemek" },
+                    { "en": "Illustrate", "pr": "ilıstreyz", "tr": "Örneklemek, Resimlemek, Açıklamak" },
+                    { "en": "Demonstrate", "pr": "demınstreyt", "tr": "Göstermek, Kanıtlamak" },
+                    { "en": "Evaluate", "pr": "ivelüeyt", "tr": "Değerlendirmek" },
+                    { "en": "Synthesize", "pr": "sintısayz", "tr": "Sentezlemek" },
+                    { "en": "Formulate", "pr": "formyuleyt", "tr": "Formüle Etmek, Geliştirmek" },
+                    { "en": "Define", "pr": "difayn", "tr": "Tanımlamak" },
+                    { "en": "Compare", "pr": "kompeyır", "tr": "Karşılaştırmak" },
+                    { "en": "Contrast", "pr": "kontraszt", "tr": "Karşıtlık Kurmak" },
+                    { "en": "Argue", "pr": "argyuu", "tr": "Tartışmak, İddia Etmek" },
+                    { "en": "Support", "pr": "sıport", "tr": "Desteklemek" },
+                    { "en": "Challenged", "pr": "çelıncd", "tr": "Sorgulamak, Meydan Okumak" },
+                    { "en": "Derive", "pr": "dirayv", "tr": "Türetmek, Elde Etmek" },
+                    { "en": "Indicate", "pr": "indikey", "tr": "İşaret Etmek, Göstermek" },
+                    { "en": "Suggest", "pr": "sıces", "tr": "Öne Sürmek, Önermek" },
+                    { "en": "Conclude", "pr": "konklud", "tr": "Sonuçlandırmak" },
+                    { "en": "Perceive", "pr": "pörsiv", "tr": "Algılamak" },
+                    { "en": "Propose", "pr": "propouz", "tr": "Teklif Etmek, Önermek" },
+                    { "en": "Observe", "pr": "obzörv", "tr": "Gözlemlemek" },
+                    { "en": "Examine", "pr": "egzemin", "tr": "İncelemek, Muayene Etmek" },
+                    { "en": "Apply", "pr": "ıplay", "tr": "Uygulamak" },
+                    { "en": "Implement", "pr": "implimınt", "tr": "Uygulamaya Koymak" },
+                    { "en": "Reflect", "pr": "riflekt", "tr": "Yansıtmak, Düşünmek" },
+                    { "en": "Relate", "pr": "rıleyt", "tr": "İlişkilendirmek" },
+                    { "en": "Discuss", "pr": "diskasıs", "tr": "Tartışmak" },
+                    { "en": "Differentiate", "pr": "difırınşiyeyt", "tr": "Ayırt Etmek" },
+                    { "en": "Validate", "pr": "velideyt", "tr": "Doğrulamak, Onaylamak" },
+                    { "en": "Generate", "pr": "cenereyt", "tr": "Üretmek, Oluşturmak" },
+                    { "en": "Evolve", "pr": "ivolv", "tr": "Gelişmek, Evrilmek" },
+                    { "en": "Comprise", "pr": "komprayz", "tr": "İçermek, Kapsamak" },
+                    { "en": "Precede", "pr": "prisiid", "tr": "Önce Gelmek" },
+                    { "en": "Succeed", "pr": "sıksiid", "tr": "Başarılı Olmak, Yerine Geçmek" },
+                    { "en": "Cite", "pr": "sayt", "tr": "Alıntı Yapmak" },
+                    { "en": "Integrate", "pr": "intigreyt", "tr": "Bütünleştirmek" },
+                    { "en": "Modify", "pr": "modıfay", "tr": "Değiştirmek, Uyarlamak" },
+                    { "en": "Replicate", "pr": "replikeyt", "tr": "Tekrarlamak, Çoğaltmak" },
+                    { "en": "Signify", "pr": "signifay", "tr": "İfade Etmek, Anlamına Gelmek" },
+                    { "en": "Account for", "pr": "ekaunt for", "tr": "Açıklamak, Sorumlu Olmak" },
+                    { "en": "Assess", "pr": "ases", "tr": "Değer Biçmek, Değerlendirmek" },
+                    { "en": "Contribute", "pr": "kontribüut", "tr": "Katkıda Bulunmak" },
+                    { "en": "Correlate", "pr": "korıleyt", "tr": "İlişkilendirmek, Korelasyon Kurmak" },
+                    { "en": "Emphasize", "pr": "emfısayz", "tr": "Vurgulamak" },
+                    { "en": "Extract", "pr": "ekstrakt", "tr": "Çıkarmak, Özütlemek" },
+                    { "en": "Hypothesize", "pr": "haypıthısayz", "tr": "Hipotez Kurmak" },
+                    { "en": "Justify", "pr": "castifay", "tr": "Gerekçelendirmek" },
+                    { "en": "Reveal", "pr": "rivil", "tr": "Ortaya Çıkarmak, Açığa Vurmak" }
+                ]
+            }
+            // İleride buraya Ünite 2, Ünite 3 vb. eklenebilir.
+        ]
+    }
+    // Diğer kart kategorileri buraya eklenebilir.
+};
+
+// Seçilen veriyi tutmak için değişken
+let currentCardData = null;
+
+// Mevcut openDetailPage fonksiyonunun üzerine yazılır veya içine entegre edilir.
+// Burası, kullanıcı bir kartı tıkladığında çalışır.
+function openDetailPage(title) {
+    
+    // Veri kontrolü ve atama
+    const cardData = data[title];
+    if (cardData) {
+        currentCardData = cardData; // Seçilen veriyi global değişkene ata
+        updateDetailPage(cardData); // Detay sayfasını güncel verilerle doldur
+    } else {
+        // Eğer data objesinde veri yoksa, mevcut HTML'deki varsayılan yapıyı korur.
+        currentCardData = null; 
+    }
+
+    // Geri kalan sayfa geçiş işlemleri
+    homePage.classList.remove('active');
+    detailPage.classList.add('active');
+    backButton.style.display = 'block';
+    menuIcon.style.display = 'none';
+    headerTitle.textContent = title;
+    window.scrollTo(0, 0);
+}
+
+// Detay sayfasının içeriğini güncelleyen yeni fonksiyon
+function updateDetailPage(data) {
+    
+    // 1. İlerleme Yüzdelerini Güncelle
+    const learnedPercentage = data.total_words > 0 
+        ? Math.floor((data.learned_words / data.total_words) * 100) 
+        : 0;
+
+    // Şimdilik "Doğru yanıtlar" için varsayılan bir değer kullanıyoruz,
+    // gerçek uygulamada bu değer dinamik olmalıdır.
+    const correctAnswersPercentage = learnedPercentage; 
+
+    document.querySelector('.percentage-row .percentage-value:nth-child(1)').textContent = `% ${correctAnswersPercentage}`;
+    document.querySelector('.percentage-row .percentage-value:nth-child(2)').textContent = `% ${learnedPercentage}`;
+
+    // 2. Timeline (Ünite Listesi) Alanını Güncelle
+    const timeline = document.querySelector('.timeline');
+    timeline.innerHTML = ''; // Mevcut üniteleri temizle (statik HTML'deki 20 üniteyi)
+
+    data.units.forEach(unit => {
+        const unitItem = document.createElement('div');
+        unitItem.classList.add('unit-item');
+        unitItem.setAttribute('onclick', `alert('Ünite ${unit.unit_number} çalışmasına başla! (${unit.words_in_unit} kelime)')`);
+        
+        const learnedInfo = `${unit.learned_in_unit}/${unit.words_in_unit} öğrenildi.`;
+
+        unitItem.innerHTML = `
+            <div class="unit-circle ${unit.color_class}">${unit.unit_number}</div>
+            <div class="unit-content">
+                <div class="unit-title">Ünite ${unit.unit_number}: ${unit.unit_title}</div>
+                <div class="unit-subtitle">${learnedInfo}</div>
+            </div>
+        `;
+        timeline.appendChild(unitItem);
+    });
+
+    // Eğer verideki ünite sayısı statik HTML'deki ünite sayısından azsa,
+    // timeline çizgisinin kesilmesini sağlamak için son elemanın ::before kuralını kaldırmak gerekebilir.
+    // CSS'te :not(:last-child)::before kuralı bunu otomatik hallediyor.
+}
+
+
+// Ana Sayfa Kart Verilerini Güncelleyen Fonksiyon (Sayfa Yüklenirken)
+function updateHomePageCard() {
+    const cardElement = Array.from(cards).find(card => 
+        card.querySelector('h3').textContent === "Akademik Fiiller"
+    );
+
+    if (cardElement && data["Akademik Fiiller"]) {
+        const cardData = data["Akademik Fiiller"];
+        const learned = cardData.learned_words;
+        const total = cardData.total_words;
+        const percentage = total > 0 ? Math.floor((learned / total) * 100) : 0;
+        
+        // Kart içeriğini güncelle
+        cardElement.querySelector('p').textContent = `${total} kelimeden ${learned} tanesi öğrenildi.`;
+        cardElement.querySelector('.progress-fill').style.width = `${percentage}%`;
+    }
+}
+
+// Sayfa yüklendiğinde, Ana Sayfa kartını yeni verilerle güncelle
+window.addEventListener('load', updateHomePageCard);
+
+// --- YENİ EKLEME BİTİŞİ ---
+
+// Geri kalan mevcut kodunuz (backButton, menuIcon ve cards.forEach) aynen kalır.
 
 </body>
 </html>
