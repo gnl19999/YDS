@@ -297,6 +297,77 @@
         .u3, .u8, .u13, .u18 { background-color: #000; }    /* Siyah */
         .u4, .u9, .u14, .u19 { background-color: var(--color-green); } /* Yeşil */
         .u5, .u10, .u15, .u20 { background-color: #e67e22; } /* Turuncu */
+
+
+        /* --- SAYFA 3: ÜNİTE DETAY SAYFASI --- */
+        .unit-detail-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .unit-progress-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--color-primary);
+            color: #fff;
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px auto;
+        }
+        .unit-detail-info h2 {
+            font-size: 24px;
+            color: var(--color-dark);
+            margin-bottom: 5px;
+        }
+        .unit-detail-info p {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 20px;
+        }
+        .action-button {
+            display: block;
+            width: 90%;
+            margin: 15px auto;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-quiz { background-color: var(--color-green); }
+        .btn-quiz:hover { background-color: #8db532; }
+        .btn-list { background-color: #e91e63; }
+        .btn-list:hover { background-color: #c71585; }
+
+        .unit-word-list {
+            padding: 0 15px;
+        }
+        .word-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--color-light-gray);
+            align-items: center;
+        }
+        .word-item:last-child {
+            border-bottom: none;
+        }
+        .word-english {
+            font-weight: bold;
+            color: var(--color-dark);
+            font-size: 15px;
+        }
+        .word-turkish {
+            color: #666;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
@@ -305,7 +376,7 @@
         
         <header>
             <div class="header-content">
-                <button id="back-button" class="back-button" style="display: none;">
+                <button id="back-button" class="back-button" style="display: none;" data-page-level="1">
                     <i class="fas fa-arrow-left"></i>
                 </button>
                 <i class="fas fa-bars" id="menu-icon"></i>
@@ -464,162 +535,257 @@
             </div>
 
             <div class="timeline">
-                <div class="unit-item" onclick="alert('Ünite 1 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="1" data-unit-color="u1">
                     <div class="unit-circle u1">1</div>
                     <div class="unit-content"><div class="unit-title">Ünite 1</div><div class="unit-subtitle">1/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 2 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="2" data-unit-color="u2">
                     <div class="unit-circle u2">2</div>
                     <div class="unit-content"><div class="unit-title">Ünite 2</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 3 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="3" data-unit-color="u3">
                     <div class="unit-circle u3">3</div>
                     <div class="unit-content"><div class="unit-title">Ünite 3</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 4 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="4" data-unit-color="u4">
                     <div class="unit-circle u4">4</div>
                     <div class="unit-content"><div class="unit-title">Ünite 4</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 5 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="5" data-unit-color="u5">
                     <div class="unit-circle u5">5</div>
                     <div class="unit-content"><div class="unit-title">Ünite 5</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 6 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="6" data-unit-color="u6">
                     <div class="unit-circle u6">6</div>
                     <div class="unit-content"><div class="unit-title">Ünite 6</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 7 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="7" data-unit-color="u7">
                     <div class="unit-circle u7">7</div>
                     <div class="unit-content"><div class="unit-title">Ünite 7</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 8 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="8" data-unit-color="u8">
                     <div class="unit-circle u8">8</div>
                     <div class="unit-content"><div class="unit-title">Ünite 8</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 9 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="9" data-unit-color="u9">
                     <div class="unit-circle u9">9</div>
                     <div class="unit-content"><div class="unit-title">Ünite 9</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 10 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="10" data-unit-color="u10">
                     <div class="unit-circle u10">10</div>
                     <div class="unit-content"><div class="unit-title">Ünite 10</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 11 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="11" data-unit-color="u11">
                     <div class="unit-circle u11">11</div>
                     <div class="unit-content"><div class="unit-title">Ünite 11</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 12 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="12" data-unit-color="u12">
                     <div class="unit-circle u12">12</div>
                     <div class="unit-content"><div class="unit-title">Ünite 12</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 13 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="13" data-unit-color="u13">
                     <div class="unit-circle u13">13</div>
                     <div class="unit-content"><div class="unit-title">Ünite 13</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 14 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="14" data-unit-color="u14">
                     <div class="unit-circle u14">14</div>
                     <div class="unit-content"><div class="unit-title">Ünite 14</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 15 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="15" data-unit-color="u15">
                     <div class="unit-circle u15">15</div>
                     <div class="unit-content"><div class="unit-title">Ünite 15</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 16 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="16" data-unit-color="u16">
                     <div class="unit-circle u16">16</div>
                     <div class="unit-content"><div class="unit-title">Ünite 16</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 17 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="17" data-unit-color="u17">
                     <div class="unit-circle u17">17</div>
                     <div class="unit-content"><div class="unit-title">Ünite 17</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 18 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="18" data-unit-color="u18">
                     <div class="unit-circle u18">18</div>
                     <div class="unit-content"><div class="unit-title">Ünite 18</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 19 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="19" data-unit-color="u19">
                     <div class="unit-circle u19">19</div>
                     <div class="unit-content"><div class="unit-title">Ünite 19</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
-                <div class="unit-item" onclick="alert('Ünite 20 çalışmasına başla!')">
+                <div class="unit-item" data-unit-number="20" data-unit-color="u20">
                     <div class="unit-circle u20">20</div>
                     <div class="unit-content"><div class="unit-title">Ünite 20</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
                 </div>
             </div>
         </div>
+
+        <div id="unit-detail-page" class="page">
+            <div class="unit-detail-info">
+                <div class="unit-progress-circle" id="detail-unit-circle" style="background-color: var(--color-primary);">1</div>
+                <h2 id="detail-unit-title">Ünite 1</h2>
+                <p>20 kelimeden 1 tanesi öğrenildi.</p>
+                <button class="action-button btn-quiz" onclick="alert('Quiz başlatıldı!')">
+                    <i class="fas fa-question-circle"></i> Quiz Çöz
+                </button>
+                <button class="action-button btn-list" onclick="alert('Kelime Listesi Açıldı!')">
+                    <i class="fas fa-list"></i> Kelime Listesine Bak
+                </button>
+            </div>
+            
+            <div class="unit-word-list">
+                <div class="word-item">
+                    <span class="word-english">Establish</span>
+                    <span class="word-turkish">Kurmak, Tespit Etmek</span>
+                </div>
+                <div class="word-item">
+                    <span class="word-english">Context</span>
+                    <span class="word-turkish">Bağlam</span>
+                </div>
+                <div class="word-item">
+                    <span class="word-english">Derive</span>
+                    <span class="word-turkish">Türetmek, Elde Etmek</span>
+                </div>
+                <div class="word-item">
+                    <span class="word-english">Hypothesis</span>
+                    <span class="word-turkish">Hipotez</span>
+                </div>
+                <div class="word-item">
+                    <span class="word-english">Variable</span>
+                    <span class="word-turkish">Değişken</span>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
         // Sayfa Elemanlarını Seç
         const homePage = document.getElementById('home-page');
         const detailPage = document.getElementById('detail-page');
+        const unitDetailPage = document.getElementById('unit-detail-page'); // Yeni sayfa eklendi
         const backButton = document.getElementById('back-button');
         const menuIcon = document.getElementById('menu-icon');
         const headerTitle = document.querySelector('header h1');
         const cards = document.querySelectorAll('.card');
+        const unitItems = document.querySelectorAll('.unit-item'); // Ünite öğeleri
 
-        // Detay Sayfasını Açan Fonksiyon
+        // **Aktif Sayfa Takibi** için bir değişken
+        let currentPageTitle = "EnglishBox";
+
+        // Detay Sayfasını Açan Fonksiyon (Level 1 -> Level 2)
         function openDetailPage(title) {
-            // Önceki sayfayı kapat
             homePage.classList.remove('active');
-            
-            // Yeni sayfayı aç
             detailPage.classList.add('active');
             
-            // Header'ı güncelle: Geri butonu görünür, menü gizlenir.
             backButton.style.display = 'block';
             menuIcon.style.display = 'none';
-
-            // Başlığı seçilen kart başlığı ile değiştir
+            backButton.setAttribute('data-page-level', '1'); // Geri tuşu Ana Sayfa'ya dönecek
             headerTitle.textContent = title; 
+            currentPageTitle = title; // Mevcut başlığı kaydet
             
-            // Sayfanın en üstüne kaydır
             window.scrollTo(0, 0);
         }
 
-        // Ana Sayfaya Dönen Fonksiyon
+        // Ana Sayfaya Dönen Fonksiyon (Level 2 -> Level 1)
         function goHome() {
-            // Önceki sayfayı kapat
             detailPage.classList.remove('active');
-            
-            // Yeni sayfayı aç
             homePage.classList.add('active');
 
-            // Header'ı güncelle: Geri butonu gizlenir, menü görünür.
             backButton.style.display = 'none';
             menuIcon.style.display = 'block';
-
-            // Başlığı ana sayfa başlığına geri getir
             headerTitle.textContent = "EnglishBox"; 
+            currentPageTitle = "EnglishBox";
+        }
+        
+        // **YENİ FONKSİYON:** Ünite Detay Sayfasını Açan Fonksiyon (Level 2 -> Level 3)
+        function openUnitDetailPage(unitNumber, unitTitle, unitSubtitle, unitColorClass) {
+            detailPage.classList.remove('active');
+            unitDetailPage.classList.add('active');
+
+            // Geri butonu Level 2'ye (Detail Page) dönecek
+            backButton.style.display = 'block';
+            backButton.setAttribute('data-page-level', '2'); 
+            menuIcon.style.display = 'none';
+            
+            // Başlığı ünite başlığı ile güncelle
+            headerTitle.textContent = unitTitle;
+
+            // Detay sayfasındaki içeriği güncelle
+            const detailCircle = document.getElementById('detail-unit-circle');
+            const detailTitle = document.getElementById('detail-unit-title');
+            
+            detailCircle.textContent = unitNumber;
+            detailTitle.textContent = unitTitle;
+
+            // Ünite rengini ayarla (İlk 5 renkten birini kullanacağız, u1, u2 gibi)
+            // Renk değişkenini CSS'ten çekmek için geçici bir element oluşturulabilir veya class kullanılabilir
+            // Basitlik için burada class üzerinden renk çekmek yerine, unitColorClass ile CSS'teki rengi kullanacağız:
+            const computedStyle = getComputedStyle(document.querySelector('.' + unitColorClass));
+            const backgroundColor = computedStyle.backgroundColor;
+
+            detailCircle.style.backgroundColor = backgroundColor;
+
+            window.scrollTo(0, 0);
+        }
+        
+        // **YENİ FONKSİYON:** Ünite Detay Sayfasından Geri Dönüş (Level 3 -> Level 2)
+        function goBackToDetailPage() {
+            unitDetailPage.classList.remove('active');
+            detailPage.classList.add('active');
+
+            backButton.style.display = 'block';
+            backButton.setAttribute('data-page-level', '1'); // Tekrar Ana Sayfa'ya dönüş moduna ayarla
+            menuIcon.style.display = 'none';
+            
+            // Başlığı kaydettiğimiz önceki başlığa geri getir (Örn: "Akademik Fiiller")
+            headerTitle.textContent = currentPageTitle; 
         }
 
-        // Geri butonuna tıklama olayı
-        backButton.addEventListener('click', goHome);
-        
-        // Menü ikonuna tıklama olayı (Şimdilik uyarı mesajı)
-        menuIcon.addEventListener('click', () => {
-             alert('Menü Tıklandı. Buraya menü açma işlevi eklenebilir.');
-        });
-        
-        // **İyileştirme:** Kartın kendisine tıklanma özelliği eklendi.
+
+        // **OLAY YÖNETİMİ**
+
+        // Kartlara tıklama olayı (Level 1 -> Level 2)
         cards.forEach(card => {
-            // Kartın içindeki "DEVAM ET" butonunu bul
             const continueButton = card.querySelector('.btn-continue');
             const cardTitle = card.querySelector('h3').textContent;
 
-            // 1. Kartın tam alanına tıklama işlevi
             card.addEventListener('click', (event) => {
-                // Eğer tıklama zaten butonun kendisine yapılmışsa (veya içindeki bir elemente)
                 if (event.target.closest('.btn-continue')) {
-                    // Butonun kendi click olayını kullanmaya devam et
                     return; 
                 }
                 openDetailPage(cardTitle);
             });
 
-            // 2. Butonun kendi click işlevi (varsa data-attribute kullanıldı)
             continueButton.addEventListener('click', () => {
                 openDetailPage(cardTitle);
             });
+        });
+
+        // Ünite Öğelerine tıklama olayı (Level 2 -> Level 3)
+        unitItems.forEach(unitItem => {
+            unitItem.addEventListener('click', () => {
+                const unitNumber = unitItem.getAttribute('data-unit-number');
+                const unitTitle = unitItem.querySelector('.unit-title').textContent;
+                const unitSubtitle = unitItem.querySelector('.unit-subtitle').textContent;
+                const unitColorClass = unitItem.getAttribute('data-unit-color'); // u1, u2, vs.
+
+                openUnitDetailPage(unitNumber, unitTitle, unitSubtitle, unitColorClass);
+            });
+        });
+
+        // Geri butonuna tıklama olayı (Tüm seviyeler için güncellendi)
+        backButton.addEventListener('click', () => {
+            const level = backButton.getAttribute('data-page-level');
+            
+            if (level === '2') {
+                goBackToDetailPage(); // Level 3 -> Level 2 (Ünite Detay -> Kelime Grubu Detay)
+            } else if (level === '1') {
+                goHome(); // Level 2 -> Level 1 (Kelime Grubu Detay -> Ana Sayfa)
+            }
+        });
+        
+        // Menü ikonuna tıklama olayı
+        menuIcon.addEventListener('click', () => {
+            alert('Menü Tıklandı. Buraya menü açma işlevi eklenebilir.');
         });
         
     </script>
