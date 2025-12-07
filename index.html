@@ -64,7 +64,7 @@
         header h1 { 
             font-size: 18px; 
             font-weight: bold; 
-            margin-left: 15px; /* Başlık ile ikon arasını açar */
+            margin-left: 15px;
         }
         .crown-icon { 
             color: var(--color-yellow); 
@@ -78,10 +78,10 @@
             background: none;
             border: none;
             padding: 0;
-            line-height: 1; /* Dikey hizalama için */
+            line-height: 1;
         }
         .back-button {
-            margin-right: 0; /* Header-content'in kendi içinde boşluk yok */
+            margin-right: 0;
         }
 
         /* SAYFA YAPISI */
@@ -132,7 +132,6 @@
             font-size: 24px;
             flex-shrink: 0;
         }
-        /* İkon Renkleri (Değişkenlerle birleştirildi) */
         .icon-verb { background-color: #34495e; }
         .icon-noun { background-color: #e91e63; }
         .icon-adj { background-color: var(--color-green); }
@@ -190,7 +189,7 @@
             text-align: center;
             width: 30%;
             cursor: pointer;
-            padding: 5px; /* Tıklama alanını genişletir */
+            padding: 5px;
         }
         .stat-icon-circle {
             width: 50px;
@@ -213,7 +212,6 @@
             line-height: 1.2; 
         }
         
-        /* Arkaplan Renkleri (Değişkenlerle birleştirildi) */
         .bg-yellow { background-color: var(--color-yellow); }
         .bg-red { background-color: var(--color-red); }
         .bg-green { background-color: var(--color-green); }
@@ -230,7 +228,7 @@
             border-bottom: 1px solid var(--color-light-gray);
         }
         .percentage-row .percentage-value {
-            color: #f39c12; /* Yüzde kısmı turuncu */
+            color: #f39c12;
         }
         .percentage-row .label {
             font-weight: normal; 
@@ -238,16 +236,15 @@
             font-size: 12px;
         }
 
-
         /* Timeline / Ünite Listesi */
         .timeline {
             padding: 0 20px;
         }
         .unit-item {
             display: flex;
-            align-items: center; /* Başlık ve daireyi dikeyde hizalar */
+            align-items: center;
             position: relative;
-            padding: 15px 0; /* Dikey boşluk artırıldı */
+            padding: 15px 0;
             cursor: pointer;
             transition: background-color 0.2s;
             border-radius: 8px;
@@ -256,9 +253,9 @@
         .unit-item:not(:last-child)::before {
             content: '';
             position: absolute;
-            left: 20px; /* Unit circle merkezine göre ayarlandı */
-            top: 55px; /* Dairenin altından başlar */
-            bottom: -15px; /* Bir sonraki öğeye kadar uzar */
+            left: 20px;
+            top: 55px;
+            bottom: -15px;
             width: 2px;
             border-left: 2px dotted #ddd;
             z-index: 1;
@@ -292,11 +289,11 @@
         }
 
         /* Ünite Renkleri */
-        .u1, .u6, .u11, .u16 { background-color: #e91e63; } /* Pembe */
-        .u2, .u7, .u12, .u17 { background-color: var(--color-primary); } /* Mavi */
-        .u3, .u8, .u13, .u18 { background-color: #000; }    /* Siyah */
-        .u4, .u9, .u14, .u19 { background-color: var(--color-green); } /* Yeşil */
-        .u5, .u10, .u15, .u20 { background-color: #e67e22; } /* Turuncu */
+        .u1, .u6, .u11, .u16 { background-color: #e91e63; }
+        .u2, .u7, .u12, .u17 { background-color: var(--color-primary); }
+        .u3, .u8, .u13, .u18 { background-color: #000; }
+        .u4, .u9, .u14, .u19 { background-color: var(--color-green); }
+        .u5, .u10, .u15, .u20 { background-color: #e67e22; }
 
 
         /* --- SAYFA 3: ÜNİTE DETAY SAYFASI --- */
@@ -412,7 +409,6 @@
                 </div>
                 <button class="btn-continue" data-card-title="Akademik Fiiller">DEVAM ET</button>
             </div>
-
             <div class="card">
                 <div class="card-content">
                     <div class="card-icon-wrapper icon-verb">
@@ -621,8 +617,8 @@
         <div id="unit-detail-page" class="page">
             <div class="unit-detail-info">
                 <div class="unit-progress-circle" id="detail-unit-circle" style="background-color: var(--color-primary);">1</div>
-                <h2 id="detail-unit-title">Ünite 1</h2>
-                <p>20 kelimeden 1 tanesi öğrenildi.</p>
+                <h2 id="detail-unit-title">Ünite Başlığı</h2>
+                <p id="detail-unit-progress">20 kelimeden X tanesi öğrenildi.</p>
                 <button class="action-button btn-quiz" onclick="alert('Quiz başlatıldı!')">
                     <i class="fas fa-question-circle"></i> Quiz Çöz
                 </button>
@@ -631,60 +627,99 @@
                 </button>
             </div>
             
-            <div class="unit-word-list">
-                <div class="word-item">
-                    <span class="word-english">Establish</span>
-                    <span class="word-turkish">Kurmak, Tespit Etmek</span>
+            <div class="unit-word-list" id="word-list-container">
                 </div>
-                <div class="word-item">
-                    <span class="word-english">Context</span>
-                    <span class="word-turkish">Bağlam</span>
-                </div>
-                <div class="word-item">
-                    <span class="word-english">Derive</span>
-                    <span class="word-turkish">Türetmek, Elde Etmek</span>
-                </div>
-                <div class="word-item">
-                    <span class="word-english">Identify</span>
-                    <span class="word-turkish">Tanımlamak, Belirlemek</span>
-                </div>
-                <div class="word-item">
-                    <span class="word-english">Hypothesis</span>
-                    <span class="word-turkish">Hipotez</span>
-                </div>
-                <div class="word-item">
-                    <span class="word-english">Variable</span>
-                    <span class="word-turkish">Değişken</span>
-                </div>
-            </div>
         </div>
 
     </div>
 
     <script>
+        // **1. Örnek Kelime Verisi:** Her ünite için farklı kelimeler
+        const unitWordsData = {
+            1: [
+                { en: "Establish", tr: "Kurmak, Tespit Etmek" },
+                { en: "Context", tr: "Bağlam" },
+                { en: "Concept", tr: "Kavram" },
+                { en: "Derive", tr: "Türetmek, Elde Etmek" },
+                { en: "Source", tr: "Kaynak, Köken" },
+            ],
+            2: [
+                { en: "Analyse", tr: "Analiz Etmek" },
+                { en: "Structure", tr: "Yapı, Kurmak" },
+                { en: "Interpret", tr: "Yorumlamak" },
+                { en: "Method", tr: "Yöntem" },
+                { en: "Theory", tr: "Teori, Kuram" },
+            ],
+            3: [
+                { en: "Achieve", tr: "Başarmak, Ulaşmak" },
+                { en: "Constraint", tr: "Kısıtlama" },
+                { en: "Implement", tr: "Uygulamak, Gerçekleştirmek" },
+                { en: "Relevant", tr: "İlgili, Alakalı" },
+                { en: "Section", tr: "Bölüm, Kesit" },
+            ],
+            4: [
+                { en: "Acquire", tr: "Elde Etmek, Kazanmak" },
+                { en: "Distribute", tr: "Dağıtmak" },
+                { en: "Focus", tr: "Odaklanmak" },
+                { en: "Legislate", tr: "Yasa Koymak" },
+                { en: "Policy", tr: "Politika, İlke" },
+            ],
+            // Daha fazla ünite eklenebilir. Şimdilik ilk 4 üniteyi dinamik yaptık.
+        };
+
+
         // Sayfa Elemanlarını Seç
         const homePage = document.getElementById('home-page');
         const detailPage = document.getElementById('detail-page');
-        const unitDetailPage = document.getElementById('unit-detail-page'); // Yeni sayfa eklendi
+        const unitDetailPage = document.getElementById('unit-detail-page');
         const backButton = document.getElementById('back-button');
         const menuIcon = document.getElementById('menu-icon');
         const headerTitle = document.querySelector('header h1');
         const cards = document.querySelectorAll('.card');
-        const unitItems = document.querySelectorAll('.unit-item'); // Ünite öğeleri
+        const unitItems = document.querySelectorAll('.unit-item');
+        const wordListContainer = document.getElementById('word-list-container'); // Yeni eklendi
 
-        // **Aktif Sayfa Takibi** için bir değişken
+        // Detay Sayfası içeriğini tutmak için
         let currentPageTitle = "EnglishBox";
+
+        // **Yeni Fonksiyon:** Kelime Listesini Yükle ve Oluştur
+        function loadUnitWords(unitNumber, unitSubtitle) {
+            wordListContainer.innerHTML = ''; // Önceki listeyi temizle
+            const words = unitWordsData[unitNumber] || [];
+            
+            // Eğer kelime varsa listeyi oluştur
+            if (words.length > 0) {
+                words.forEach(word => {
+                    const wordItem = document.createElement('div');
+                    wordItem.className = 'word-item';
+                    wordItem.innerHTML = `
+                        <span class="word-english">${word.en}</span>
+                        <span class="word-turkish">${word.tr}</span>
+                    `;
+                    wordListContainer.appendChild(wordItem);
+                });
+            } else {
+                // Kelime yoksa uyarı göster
+                wordListContainer.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Bu ünite için henüz kelime eklenmedi.</p>';
+            }
+
+            // İlerleme durumunu güncelle
+            const detailProgress = document.getElementById('detail-unit-progress');
+            detailProgress.textContent = unitSubtitle.replace('öğrenildi.', 'tamamlandı.');
+        }
+
 
         // Detay Sayfasını Açan Fonksiyon (Level 1 -> Level 2)
         function openDetailPage(title) {
             homePage.classList.remove('active');
+            unitDetailPage.classList.remove('active'); // Ünite detay sayfasını da kapattık
             detailPage.classList.add('active');
             
             backButton.style.display = 'block';
             menuIcon.style.display = 'none';
-            backButton.setAttribute('data-page-level', '1'); // Geri tuşu Ana Sayfa'ya dönecek
+            backButton.setAttribute('data-page-level', '1');
             headerTitle.textContent = title; 
-            currentPageTitle = title; // Mevcut başlığı kaydet
+            currentPageTitle = title;
             
             window.scrollTo(0, 0);
         }
@@ -692,6 +727,7 @@
         // Ana Sayfaya Dönen Fonksiyon (Level 2 -> Level 1)
         function goHome() {
             detailPage.classList.remove('active');
+            unitDetailPage.classList.remove('active'); // Ünite detay sayfasını da kapattık
             homePage.classList.add('active');
 
             backButton.style.display = 'none';
@@ -700,17 +736,15 @@
             currentPageTitle = "EnglishBox";
         }
         
-        // **YENİ FONKSİYON:** Ünite Detay Sayfasını Açan Fonksiyon (Level 2 -> Level 3)
+        // Ünite Detay Sayfasını Açan Fonksiyon (Level 2 -> Level 3)
         function openUnitDetailPage(unitNumber, unitTitle, unitSubtitle, unitColorClass) {
             detailPage.classList.remove('active');
             unitDetailPage.classList.add('active');
 
-            // Geri butonu Level 2'ye (Detail Page) dönecek
             backButton.style.display = 'block';
             backButton.setAttribute('data-page-level', '2'); 
             menuIcon.style.display = 'none';
             
-            // Başlığı ünite başlığı ile güncelle
             headerTitle.textContent = unitTitle;
 
             // Detay sayfasındaki içeriği güncelle
@@ -720,18 +754,17 @@
             detailCircle.textContent = unitNumber;
             detailTitle.textContent = unitTitle;
 
-            // Ünite rengini ayarla (İlk 5 renkten birini kullanacağız, u1, u2 gibi)
-            // Renk değişkenini CSS'ten çekmek için geçici bir element oluşturulabilir veya class kullanılabilir
-            // Basitlik için burada class üzerinden renk çekmek yerine, unitColorClass ile CSS'teki rengi kullanacağız:
             const computedStyle = getComputedStyle(document.querySelector('.' + unitColorClass));
             const backgroundColor = computedStyle.backgroundColor;
-
             detailCircle.style.backgroundColor = backgroundColor;
+
+            // **Yeni İşlev:** Kelimeleri yükle
+            loadUnitWords(unitNumber, unitSubtitle);
 
             window.scrollTo(0, 0);
         }
         
-        // **YENİ FONKSİYON:** Ünite Detay Sayfasından Geri Dönüş (Level 3 -> Level 2)
+        // Ünite Detay Sayfasından Geri Dönüş (Level 3 -> Level 2)
         function goBackToDetailPage() {
             unitDetailPage.classList.remove('active');
             detailPage.classList.add('active');
@@ -740,7 +773,6 @@
             backButton.setAttribute('data-page-level', '1'); // Tekrar Ana Sayfa'ya dönüş moduna ayarla
             menuIcon.style.display = 'none';
             
-            // Başlığı kaydettiğimiz önceki başlığa geri getir (Örn: "Akademik Fiiller")
             headerTitle.textContent = currentPageTitle; 
         }
 
@@ -752,16 +784,15 @@
             const continueButton = card.querySelector('.btn-continue');
             const cardTitle = card.querySelector('h3').textContent;
 
-            card.addEventListener('click', (event) => {
+            const clickHandler = (event) => {
                 if (event.target.closest('.btn-continue')) {
                     return; 
                 }
                 openDetailPage(cardTitle);
-            });
+            };
 
-            continueButton.addEventListener('click', () => {
-                openDetailPage(cardTitle);
-            });
+            card.addEventListener('click', clickHandler);
+            continueButton.addEventListener('click', () => openDetailPage(cardTitle));
         });
 
         // Ünite Öğelerine tıklama olayı (Level 2 -> Level 3)
@@ -770,9 +801,12 @@
                 const unitNumber = unitItem.getAttribute('data-unit-number');
                 const unitTitle = unitItem.querySelector('.unit-title').textContent;
                 const unitSubtitle = unitItem.querySelector('.unit-subtitle').textContent;
-                const unitColorClass = unitItem.getAttribute('data-unit-color'); // u1, u2, vs.
+                const unitColorClass = unitItem.getAttribute('data-unit-color');
 
-                openUnitDetailPage(unitNumber, unitTitle, unitSubtitle, unitColorClass);
+                // Ünite numarasını sayıya çevir
+                const numUnit = parseInt(unitNumber);
+                
+                openUnitDetailPage(numUnit, unitTitle, unitSubtitle, unitColorClass);
             });
         });
 
@@ -781,9 +815,9 @@
             const level = backButton.getAttribute('data-page-level');
             
             if (level === '2') {
-                goBackToDetailPage(); // Level 3 -> Level 2 (Ünite Detay -> Kelime Grubu Detay)
+                goBackToDetailPage();
             } else if (level === '1') {
-                goHome(); // Level 2 -> Level 1 (Kelime Grubu Detay -> Ana Sayfa)
+                goHome();
             }
         });
         
