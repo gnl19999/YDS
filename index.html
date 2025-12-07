@@ -1,792 +1,708 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EnglishBox</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        /* GENEL AYARLAR */
-        :root {
-            /* Renk Değişkenleri Tanımlandı */
-            --bg-light-gray: #f2f2f7;
-            --color-primary: #3498db;
-            --color-dark: #333;
-            --color-light-gray: #eee;
-            --color-yellow: #f1c40f;
-            --color-red: #e74c3c;
-            --color-green: #a3cb38;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnglishBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* GENEL AYARLAR */
+        :root {
+            /* Renk Değişkenleri Tanımlandı */
+            --bg-light-gray: #f2f2f7;
+            --color-primary: #3498db;
+            --color-dark: #333;
+            --color-light-gray: #eee;
+            --color-yellow: #f1c40f;
+            --color-red: #e74c3c;
+            --color-green: #a3cb38;
+        }
 
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-        body {
-            background-color: var(--bg-light-gray);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-        }
+        body {
+            background-color: var(--bg-light-gray);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
 
-        /* MOBİL GÖRÜNÜM KONTEYNERİ */
-        .mobile-container {
-            width: 100%;
-            max-width: 400px;
-            background-color: #fff;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-            min-height: 800px;
-            padding-bottom: 20px;
-        }
+        /* MOBİL GÖRÜNÜM KONTEYNERİ */
+        .mobile-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            min-height: 800px;
+            padding-bottom: 20px;
+        }
 
-        /* HEADER */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: #fff;
-            border-bottom: 1px solid var(--color-light-gray);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        .header-content {
-            display: flex;
-            align-items: center;
-        }
-        header h1 { 
-            font-size: 18px; 
-            font-weight: bold; 
-            margin-left: 15px; /* Başlık ile ikon arasını açar */
-        }
-        .crown-icon { 
-            color: var(--color-yellow); 
-            font-size: 20px; 
-        }
-        /* İkonların stilini birleştirildi */
-        #menu-icon, .back-button { 
-            color: var(--color-dark); 
-            cursor: pointer; 
-            font-size: 18px;
-            background: none;
-            border: none;
-            padding: 0;
-            line-height: 1; /* Dikey hizalama için */
-        }
-        .back-button {
-            margin-right: 0; /* Header-content'in kendi içinde boşluk yok */
-        }
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid var(--color-light-gray);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+        }
+        header h1 { 
+            font-size: 18px; 
+            font-weight: bold; 
+            margin-left: 15px; /* Başlık ile ikon arasını açar */
+        }
+        .crown-icon { 
+            color: var(--color-yellow); 
+            font-size: 20px; 
+        }
+        /* İkonların stilini birleştirildi */
+        #menu-icon, .back-button { 
+            color: var(--color-dark); 
+            cursor: pointer; 
+            font-size: 18px;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1; /* Dikey hizalama için */
+        }
+        .back-button {
+            margin-right: 0; /* Header-content'in kendi içinde boşluk yok */
+        }
 
-        /* SAYFA YAPISI */
-        .page {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            width: 100%;
-        }
-        .page.active {
-            display: block;
-            opacity: 1;
-        }
+        /* SAYFA YAPISI */
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            width: 100%;
+        }
+        .page.active {
+            display: block;
+            opacity: 1;
+        }
 
-        /* --- SAYFA 1: ANA LİSTE (HOME) --- */
-        .card {
-            background: #fff;
-            margin: 15px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid var(--color-light-gray);
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.2s;
-        }
-        .card:active {
-            transform: scale(0.99);
-        }
-        .card:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+        /* --- SAYFA 1: ANA LİSTE (HOME) --- */
+        .card {
+            background: #fff;
+            margin: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--color-light-gray);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+        }
+        .card:active {
+            transform: scale(0.99);
+        }
+        .card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
 
-        .card-content {
-            padding: 15px;
-            display: flex;
-            align-items: center;
-        }
+        .card-content {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
 
-        .card-icon-wrapper {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 24px;
-            flex-shrink: 0;
-        }
-        /* İkon Renkleri (Değişkenlerle birleştirildi) */
-        .icon-verb { background-color: #34495e; }
-        .icon-noun { background-color: #e91e63; }
-        .icon-adj { background-color: var(--color-green); }
-        .icon-adv { background-color: #e67e22; }
-        .icon-conj { background-color: #9b59b6; }
-        .icon-phrasal { background-color: var(--color-primary); }
-
-
-        .card-info { flex-grow: 1; }
-        .card-info h3 { font-size: 16px; margin-bottom: 5px; color: var(--color-dark); }
-        .card-info p { font-size: 13px; color: #888; margin-bottom: 8px; }
-
-        .progress-bar {
-            height: 6px;
-            background-color: var(--color-light-gray);
-            border-radius: 3px;
-            width: 100%;
-        }
-        .progress-fill {
-            height: 100%;
-            background-color: var(--color-primary);
-            width: 0%;
-            border-radius: 3px;
-            transition: width 0.5s ease;
-        }
-
-        .btn-continue {
-            width: 100%;
-            padding: 12px;
-            background: #fff;
-            border: none;
-            border-top: 1px solid var(--color-light-gray);
-            color: var(--color-dark);
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: background 0.2s, color 0.2s;
-        }
-        .btn-continue:hover { background-color: #f5f5f5; }
-        .btn-continue:active { background-color: #e0e0e0; }
-
-        /* --- SAYFA 2: DETAY (UNITS) --- */
-        .stats-row {
-            display: flex;
-            justify-content: space-around;
-            padding: 20px 10px;
-            background: #fff;
-            margin-bottom: 10px;
-        }
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 30%;
-            cursor: pointer;
-            padding: 5px; /* Tıklama alanını genişletir */
-        }
-        .stat-icon-circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 20px;
-            margin-bottom: 8px;
-            transition: box-shadow 0.2s;
-        }
-        .stat-item:hover .stat-icon-circle {
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .stat-text { 
-            font-size: 11px; 
-            color: #666; 
-            line-height: 1.2; 
-        }
-        
-        /* Arkaplan Renkleri (Değişkenlerle birleştirildi) */
-        .bg-yellow { background-color: var(--color-yellow); }
-        .bg-red { background-color: var(--color-red); }
-        .bg-green { background-color: var(--color-green); }
-
-        .percentage-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 20px;
-            background: #fff;
-            font-weight: bold;
-            font-size: 14px;
-            margin-bottom: 20px;
-            border-top: 1px solid var(--color-light-gray);
-            border-bottom: 1px solid var(--color-light-gray);
-        }
-        .percentage-row .percentage-value {
-            color: #f39c12; /* Yüzde kısmı turuncu */
-        }
-        .percentage-row .label {
-            font-weight: normal; 
-            color: #666; 
-            font-size: 12px;
-        }
+        .card-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        /* İkon Renkleri (Değişkenlerle birleştirildi) */
+        .icon-verb { background-color: #34495e; }
+        .icon-noun { background-color: #e91e63; }
+        .icon-adj { background-color: var(--color-green); }
+        .icon-adv { background-color: #e67e22; }
+        .icon-conj { background-color: #9b59b6; }
+        .icon-phrasal { background-color: var(--color-primary); }
 
 
-        /* Timeline / Ünite Listesi */
-        .timeline {
-            padding: 0 20px;
-        }
-        .unit-item {
-            display: flex;
-            align-items: center; /* Başlık ve daireyi dikeyde hizalar */
-            position: relative;
-            padding: 15px 0; /* Dikey boşluk artırıldı */
-            cursor: pointer;
-            transition: background-color 0.2s;
-            border-radius: 8px;
-            margin-bottom: 0;
-        }
-        .unit-item:not(:last-child)::before {
-            content: '';
-            position: absolute;
-            left: 20px; /* Unit circle merkezine göre ayarlandı */
-            top: 55px; /* Dairenin altından başlar */
-            bottom: -15px; /* Bir sonraki öğeye kadar uzar */
-            width: 2px;
-            border-left: 2px dotted #ddd;
-            z-index: 1;
-        }
-        .unit-item:hover { background-color: #f9f9f9; }
+        .card-info { flex-grow: 1; }
+        .card-info h3 { font-size: 16px; margin-bottom: 5px; color: var(--color-dark); }
+        .card-info p { font-size: 13px; color: #888; margin-bottom: 8px; }
 
-        .unit-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: bold;
-            flex-shrink: 0;
-            z-index: 2;
-        }
-        .unit-content {
-            margin-left: 15px;
-        }
-        .unit-title { 
-            font-weight: bold; 
-            font-size: 16px; 
-            color: var(--color-dark); 
-        }
-        .unit-subtitle { 
-            font-size: 13px; 
-            color: #999; 
-            margin-top: 4px; 
-        }
+        .progress-bar {
+            height: 6px;
+            background-color: var(--color-light-gray);
+            border-radius: 3px;
+            width: 100%;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: var(--color-primary);
+            width: 0%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
 
-        /* Ünite Renkleri */
-        .u1, .u6, .u11, .u16 { background-color: #e91e63; } /* Pembe */
-        .u2, .u7, .u12, .u17 { background-color: var(--color-primary); } /* Mavi */
-        .u3, .u8, .u13, .u18 { background-color: #000; }    /* Siyah */
-        .u4, .u9, .u14, .u19 { background-color: var(--color-green); } /* Yeşil */
-        .u5, .u10, .u15, .u20 { background-color: #e67e22; } /* Turuncu */
-    </style>
+        .btn-continue {
+            width: 100%;
+            padding: 12px;
+            background: #fff;
+            border: none;
+            border-top: 1px solid var(--color-light-gray);
+            color: var(--color-dark);
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-continue:hover { background-color: #f5f5f5; }
+        .btn-continue:active { background-color: #e0e0e0; }
+
+        /* --- SAYFA 2: DETAY (UNITS) --- */
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 10px;
+            background: #fff;
+            margin-bottom: 10px;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 30%;
+            cursor: pointer;
+            padding: 5px; /* Tıklama alanını genişletir */
+        }
+        .stat-icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 8px;
+            transition: box-shadow 0.2s;
+        }
+        .stat-item:hover .stat-icon-circle {
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .stat-text { 
+            font-size: 11px; 
+            color: #666; 
+            line-height: 1.2; 
+        }
+        
+        /* Arkaplan Renkleri (Değişkenlerle birleştirildi) */
+        .bg-yellow { background-color: var(--color-yellow); }
+        .bg-red { background-color: var(--color-red); }
+        .bg-green { background-color: var(--color-green); }
+
+        .percentage-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border-top: 1px solid var(--color-light-gray);
+            border-bottom: 1px solid var(--color-light-gray);
+        }
+        .percentage-row .percentage-value {
+            color: #f39c12; /* Yüzde kısmı turuncu */
+        }
+        .percentage-row .label {
+            font-weight: normal; 
+            color: #666; 
+            font-size: 12px;
+        }
+
+
+        /* Timeline / Ünite Listesi */
+        .timeline {
+            padding: 0 20px;
+        }
+        .unit-item {
+            display: flex;
+            align-items: center; /* Başlık ve daireyi dikeyde hizalar */
+            position: relative;
+            padding: 15px 0; /* Dikey boşluk artırıldı */
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 8px;
+            margin-bottom: 0;
+        }
+        .unit-item:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 20px; /* Unit circle merkezine göre ayarlandı */
+            top: 55px; /* Dairenin altından başlar */
+            bottom: -15px; /* Bir sonraki öğeye kadar uzar */
+            width: 2px;
+            border-left: 2px dotted #ddd;
+            z-index: 1;
+        }
+        .unit-item:hover { background-color: #f9f9f9; }
+
+        .unit-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+        .unit-content {
+            margin-left: 15px;
+        }
+        .unit-title { 
+            font-weight: bold; 
+            font-size: 16px; 
+            color: var(--color-dark); 
+        }
+        .unit-subtitle { 
+            font-size: 13px; 
+            color: #999; 
+            margin-top: 4px; 
+        }
+
+        /* Ünite Renkleri */
+        .u1, .u6, .u11, .u16 { background-color: #e91e63; } /* Pembe */
+        .u2, .u7, .u12, .u17 { background-color: var(--color-primary); } /* Mavi */
+        .u3, .u8, .u13, .u18 { background-color: #000; }    /* Siyah */
+        .u4, .u9, .u14, .u19 { background-color: var(--color-green); } /* Yeşil */
+        .u5, .u10, .u15, .u20 { background-color: #e67e22; } /* Turuncu */
+
+        /* Yeni Eklenti: Kelime Listesi Stil */
+        .word-list {
+            list-style: none;
+            padding: 0 20px;
+            margin-top: 15px;
+        }
+        .word-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f2f2f2;
+        }
+        .word-item:last-child { border-bottom: none; }
+
+        .word-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .word-english {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--color-dark);
+        }
+        .word-pronunciation {
+            font-size: 12px;
+            color: var(--color-primary);
+            margin-top: 2px;
+        }
+        .word-turkish {
+            font-size: 14px;
+            color: #666;
+            text-align: right;
+            font-style: italic;
+        }
+
+    </style>
 </head>
 <body>
 
-    <div class="mobile-container">
-        
-        <header>
-            <div class="header-content">
-                <button id="back-button" class="back-button" style="display: none;">
-                    <i class="fas fa-arrow-left"></i>
-                </button>
-                <i class="fas fa-bars" id="menu-icon"></i>
-                <h1>EnglishBox</h1>
-            </div>
-            <i class="fas fa-crown crown-icon"></i>
-        </header>
+    <div class="mobile-container">
+        
+        <header>
+            <div class="header-content">
+                <button id="back-button" class="back-button" style="display: none;">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <i class="fas fa-bars" id="menu-icon"></i>
+                <h1>EnglishBox</h1>
+            </div>
+            <i class="fas fa-crown crown-icon"></i>
+        </header>
 
-        <div id="home-page" class="page active">
-            
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon-wrapper icon-verb">
-                        <i class="fas fa-book-open"></i> </div>
-                    <div class="card-info">
-                        <h3>İleri Düzey Akademik Fiiller</h3>
-                        <p>435 kelimeden 21 tanesi öğrenildi.</p>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 5%"></div></div>
-                    </div>
-                </div>
-                <button class="btn-continue" data-card-title="İleri Düzey Akademik Fiiller">DEVAM ET</button>
-            </div>
+        <div id="home-page" class="page active">
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-verb">
+                        <i class="fas fa-book-open"></i> </div>
+                    <div class="card-info">
+                        <h3>İleri Düzey Akademik Fiiller</h3>
+                        <p>435 kelimeden 21 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 5%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" data-card-title="İleri Düzey Akademik Fiiller" data-card-id="advanced-verbs">DEVAM ET</button>
+            </div>
 
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon-wrapper icon-verb">
-                        <i class="fas fa-running"></i> </div>
-                    <div class="card-info">
-                        <h3>Akademik Fiiller</h3>
-                        <p>380 kelimeden 19 tanesi öğrenildi.</p>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 5%"></div></div>
-                    </div>
-                </div>
-                <button class="btn-continue" data-card-title="Akademik Fiiller">DEVAM ET</button>
-            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-verb">
+                        <i class="fas fa-running"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik Fiiller</h3>
+                        <p>380 kelimeden 19 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 5%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" data-card-title="Akademik Fiiller" data-card-id="academic-verbs">DEVAM ET</button>
+            </div>
 
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon-wrapper icon-verb">
-                        <i class="fas fa-running"></i> </div>
-                    <div class="card-info">
-                        <h3>En Çok Kullanılan Fiiller</h3>
-                        <p>180 kelimeden 18 tanesi öğrenildi.</p>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 10%"></div></div>
-                    </div>
-                </div>
-                <button class="btn-continue" data-card-title="En Çok Kullanılan Fiiller">DEVAM ET</button>
-            </div>
-            
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon-wrapper icon-adj">
-                        <i class="fas fa-star"></i> </div>
-                    <div class="card-info">
-                        <h3>Akademik Sıfatlar</h3>
-                        <p>300 kelimeden 0 tanesi öğrenildi.</p>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
-                    </div>
-                </div>
-                <button class="btn-continue" data-card-title="Akademik Sıfatlar">DEVAM ET</button>
-            </div>
-            
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon-wrapper icon-noun">
-                        <i class="fas fa-building"></i> </div>
-                    <div class="card-info">
-                        <h3>Akademik İsimler</h3>
-                        <p>400 kelimeden 0 tanesi öğrenildi.</p>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
-                    </div>
-                </div>
-                <button class="btn-continue" data-card-title="Akademik İsimler">DEVAM ET</button>
-            </div>
-            
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon-wrapper icon-conj">
-                        <i class="fas fa-link"></i> </div>
-                    <div class="card-info">
-                        <h3>Akademik Bağlaçlar</h3>
-                        <p>90 kelimeden 0 tanesi öğrenildi.</p>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
-                    </div>
-                </div>
-                <button class="btn-continue" data-card-title="Akademik Bağlaçlar">DEVAM ET</button>
-            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-verb">
+                        <i class="fas fa-running"></i> </div>
+                    <div class="card-info">
+                        <h3>En Çok Kullanılan Fiiller</h3>
+                        <p>180 kelimeden 18 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 10%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" data-card-title="En Çok Kullanılan Fiiller" data-card-id="common-verbs">DEVAM ET</button>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-adj">
+                        <i class="fas fa-star"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik Sıfatlar</h3>
+                        <p>300 kelimeden 0 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" data-card-title="Akademik Sıfatlar" data-card-id="academic-adjectives">DEVAM ET</button>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-noun">
+                        <i class="fas fa-building"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik İsimler</h3>
+                        <p>400 kelimeden 0 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" data-card-title="Akademik İsimler" data-card-id="academic-nouns">DEVAM ET</button>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-conj">
+                        <i class="fas fa-link"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik Bağlaçlar</h3>
+                        <p>90 kelimeden 0 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" data-card-title="Akademik Bağlaçlar" data-card-id="academic-conjunctions">DEVAM ET</button>
+            </div>
 
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon-wrapper icon-phrasal">
-                        <i class="fas fa-dice"></i> </div>
-                    <div class="card-info">
-                        <h3>Öbek Fiiller</h3>
-                        <p>200 kelimeden 0 tanesi öğrenildi.</p>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
-                    </div>
-                </div>
-                <button class="btn-continue" data-card-title="Öbek Fiiller">DEVAM ET</button>
-            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-phrasal">
+                        <i class="fas fa-dice"></i> </div>
+                    <div class="card-info">
+                        <h3>Öbek Fiiller</h3>
+                        <p>200 kelimeden 0 tanesi öğrenildi.</p>
+                    </div>
+                </div>
+                <button class="btn-continue" data-card-title="Öbek Fiiller" data-card-id="phrasal-verbs">DEVAM ET</button>
+            </div>
 
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon-wrapper icon-adv">
-                        <i class="fas fa-clock"></i> </div>
-                    <div class="card-info">
-                        <h3>Akademik Zarflar</h3>
-                        <p>300 kelimeden 0 tanesi öğrenildi.</p>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
-                    </div>
-                </div>
-                <button class="btn-continue" data-card-title="Akademik Zarflar">DEVAM ET</button>
-            </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-adv">
+                        <i class="fas fa-clock"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik Zarflar</h3>
+                        <p>300 kelimeden 0 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" data-card-title="Akademik Zarflar" data-card-id="academic-adverbs">DEVAM ET</button>
+            </div>
 
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-icon-wrapper icon-noun">
-                        <i class="fas fa-users"></i> </div>
-                    <div class="card-info">
-                        <h3>En Çok Kullanılan İsimler</h3>
-                        <p>200 kelimeden 30 tanesi öğrenildi.</p>
-                        <div class="progress-bar"><div class="progress-fill" style="width: 15%"></div></div>
-                    </div>
-                </div>
-                <button class="btn-continue" data-card-title="En Çok Kullanılan İsimler">DEVAM ET</button>
-            </div>
-            
-        </div>
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-noun">
+                        <i class="fas fa-users"></i> </div>
+                    <div class="card-info">
+                        <h3>En Çok Kullanılan İsimler</h3>
+                        <p>200 kelimeden 30 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 15%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" data-card-title="En Çok Kullanılan İsimler" data-card-id="common-nouns">DEVAM ET</button>
+            </div>
+            
+        </div>
 
-        <div id="detail-page" class="page">
-            
-            <div class="stats-row">
-                <div class="stat-item" onclick="alert('Unutulabilecek Kelimeler çalışması başlatıldı!')">
-                    <div class="stat-icon-circle bg-yellow"><i class="fas fa-thumbtack"></i></div>
-                    <div class="stat-text">Unutulabilecek<br>Kelimeler</div>
-                </div>
-                <div class="stat-item" onclick="alert('Sık Yanlış Cevaplananlar çalışması başlatıldı!')">
-                    <div class="stat-icon-circle bg-red"><i class="fas fa-times"></i></div>
-                    <div class="stat-text">Sık Yanlış<br>Cevaplananlar</div>
-                </div>
-                <div class="stat-item" onclick="alert('Karışık Tekrar Çalışması başlatıldı!')">
-                    <div class="stat-icon-circle bg-green"><i class="fas fa-random"></i></div>
-                    <div class="stat-text">Karışık Tekrar<br>Çalışması</div>
-                </div>
-            </div>
+        <div id="detail-page" class="page">
+            
+            <div class="stats-row">
+                <div class="stat-item" onclick="alert('Unutulabilecek Kelimeler çalışması başlatıldı!')">
+                    <div class="stat-icon-circle bg-yellow"><i class="fas fa-thumbtack"></i></div>
+                    <div class="stat-text">Unutulabilecek<br>Kelimeler</div>
+                </div>
+                <div class="stat-item" onclick="alert('Sık Yanlış Cevaplananlar çalışması başlatıldı!')">
+                    <div class="stat-icon-circle bg-red"><i class="fas fa-times"></i></div>
+                    <div class="stat-text">Sık Yanlış<br>Cevaplananlar</div>
+                </div>
+                <div class="stat-item" onclick="alert('Karışık Tekrar Çalışması başlatıldı!')">
+                    <div class="stat-icon-circle bg-green"><i class="fas fa-random"></i></div>
+                    <div class="stat-text">Karışık Tekrar<br>Çalışması</div>
+                </div>
+            </div>
 
-            <div class="percentage-row">
-                <div class="percentage-item">
-                    <span class="percentage-value">% 10</span> 
-                    <span class="label">Doğru yanıtlar</span>
-                </div>
-                <div class="percentage-item">
-                    <span class="percentage-value">% 5</span> 
-                    <span class="label">Öğrenilenlerin oranı</span>
-                </div>
-            </div>
+            <div class="percentage-row">
+                <div class="percentage-item">
+                    <span class="percentage-value">% 10</span> 
+                    <span class="label">Doğru yanıtlar</span>
+                </div>
+                <div class="percentage-item">
+                    <span class="percentage-value">% 5</span> 
+                    <span class="label">Öğrenilenlerin oranı</span>
+                </div>
+            </div>
 
-            <div class="timeline">
-                <div class="unit-item" onclick="alert('Ünite 1 çalışmasına başla!')">
-                    <div class="unit-circle u1">1</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 1</div><div class="unit-subtitle">1/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 2 çalışmasına başla!')">
-                    <div class="unit-circle u2">2</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 2</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 3 çalışmasına başla!')">
-                    <div class="unit-circle u3">3</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 3</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 4 çalışmasına başla!')">
-                    <div class="unit-circle u4">4</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 4</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 5 çalışmasına başla!')">
-                    <div class="unit-circle u5">5</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 5</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 6 çalışmasına başla!')">
-                    <div class="unit-circle u6">6</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 6</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 7 çalışmasına başla!')">
-                    <div class="unit-circle u7">7</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 7</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 8 çalışmasına başla!')">
-                    <div class="unit-circle u8">8</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 8</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 9 çalışmasına başla!')">
-                    <div class="unit-circle u9">9</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 9</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 10 çalışmasına başla!')">
-                    <div class="unit-circle u10">10</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 10</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 11 çalışmasına başla!')">
-                    <div class="unit-circle u11">11</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 11</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 12 çalışmasına başla!')">
-                    <div class="unit-circle u12">12</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 12</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 13 çalışmasına başla!')">
-                    <div class="unit-circle u13">13</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 13</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 14 çalışmasına başla!')">
-                    <div class="unit-circle u14">14</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 14</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 15 çalışmasına başla!')">
-                    <div class="unit-circle u15">15</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 15</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 16 çalışmasına başla!')">
-                    <div class="unit-circle u16">16</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 16</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 17 çalışmasına başla!')">
-                    <div class="unit-circle u17">17</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 17</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 18 çalışmasına başla!')">
-                    <div class="unit-circle u18">18</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 18</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 19 çalışmasına başla!')">
-                    <div class="unit-circle u19">19</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 19</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-                <div class="unit-item" onclick="alert('Ünite 20 çalışmasına başla!')">
-                    <div class="unit-circle u20">20</div>
-                    <div class="unit-content"><div class="unit-title">Ünite 20</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
-                </div>
-            </div>
-        </div>
-    </div>
+            <div class="timeline" id="unit-timeline">
+                            </div>
 
-    <script>
-        // Sayfa Elemanlarını Seç
-        const homePage = document.getElementById('home-page');
-        const detailPage = document.getElementById('detail-page');
-        const backButton = document.getElementById('back-button');
-        const menuIcon = document.getElementById('menu-icon');
-        const headerTitle = document.querySelector('header h1');
-        const cards = document.querySelectorAll('.card');
+                        <ul class="word-list" id="word-list-container">
+                            </ul>
 
-        // Detay Sayfasını Açan Fonksiyon
-        function openDetailPage(title) {
-            // Önceki sayfayı kapat
-            homePage.classList.remove('active');
-            
-            // Yeni sayfayı aç
-            detailPage.classList.add('active');
-            
-            // Header'ı güncelle: Geri butonu görünür, menü gizlenir.
-            backButton.style.display = 'block';
-            menuIcon.style.display = 'none';
+        </div>
+    </div>
 
-            // Başlığı seçilen kart başlığı ile değiştir
-            headerTitle.textContent = title; 
-            
-            // Sayfanın en üstüne kaydır
-            window.scrollTo(0, 0);
-        }
+    <script>
+        // Kelime Verileri (İstenen kelimeler buraya eklendi)
+        const wordData = {
+            'advanced-verbs': [
+                { 
+                    unit: 1, 
+                    totalWords: 20, 
+                    learnedWords: 8,
+                    words: [
+                        { "en": "Analyze", "pr": "enılayz", "tr": "Analiz Etmek" },
+                        { "en": "Identify", "pr": "aydentifay", "tr": "Tanımlamak, Belirlemek" },
+                        { "en": "Determine", "pr": "dıtörmin", "tr": "Saptamak, Karar Vermek" },
+                        { "en": "Establish", "pr": "estebliş", "tr": "Kurmak, Oluşturmak, Saptamak" },
+                        { "en": "Investigate", "pr": "invesztigeyt", "tr": "Araştırmak, İncelemek" },
+                        { "en": "Illustrate", "pr": "ilıstreyz", "tr": "Örneklemek, Resimlemek, Açıklamak" },
+                        { "en": "Demonstrate", "pr": "demınstreyt", "tr": "Göstermek, Kanıtlamak" },
+                        { "en": "Evaluate", "pr": "ivelüeyt", "tr": "Değerlendirmek" }
+                    ]
+                },
+                // Diğer 19 ünite için yer tutucular (Ünite 1'i 8 kelime yaptığınız için, diğer ünitelerin 0/20 olduğunu varsayıyorum.)
+                ...Array(19).fill(0).map((_, i) => ({ unit: i + 2, totalWords: 20, learnedWords: 0, words: [] }))
+            ],
+            'academic-verbs': Array(20).fill(0).map((_, i) => ({ unit: i + 1, totalWords: 20, learnedWords: i === 0 ? 1 : 0, words: [] })),
+            'common-verbs': Array(10).fill(0).map((_, i) => ({ unit: i + 1, totalWords: 18, learnedWords: i < 1 ? 18 : 0, words: [] })),
+            'academic-adjectives': Array(20).fill(0).map((_, i) => ({ unit: i + 1, totalWords: 15, learnedWords: 0, words: [] })),
+            'academic-nouns': Array(20).fill(0).map((_, i) => ({ unit: i + 1, totalWords: 20, learnedWords: 0, words: [] })),
+            'academic-conjunctions': Array(5).fill(0).map((_, i) => ({ unit: i + 1, totalWords: 18, learnedWords: 0, words: [] })),
+            'phrasal-verbs': Array(10).fill(0).map((_, i) => ({ unit: i + 1, totalWords: 20, learnedWords: 0, words: [] })),
+            'academic-adverbs': Array(15).fill(0).map((_, i) => ({ unit: i + 1, totalWords: 20, learnedWords: 0, words: [] })),
+            'common-nouns': Array(10).fill(0).map((_, i) => ({ unit: i + 1, totalWords: 20, learnedWords: i < 1 ? 30 : 0, words: [] })),
+        };
+        
+        // Şu anki aktif kartın ID'sini tutmak için değişken
+        let activeCardId = null;
 
-        // Ana Sayfaya Dönen Fonksiyon
-        function goHome() {
-            // Önceki sayfayı kapat
-            detailPage.classList.remove('active');
-            
-            // Yeni sayfayı aç
-            homePage.classList.add('active');
-
-            // Header'ı güncelle: Geri butonu gizlenir, menü görünür.
-            backButton.style.display = 'none';
-            menuIcon.style.display = 'block';
-
-            // Başlığı ana sayfa başlığına geri getir
-            headerTitle.textContent = "EnglishBox"; 
-        }
-
-        // Geri butonuna tıklama olayı
-        backButton.addEventListener('click', goHome);
-        
-        // Menü ikonuna tıklama olayı (Şimdilik uyarı mesajı)
-        menuIcon.addEventListener('click', () => {
-             alert('Menü Tıklandı. Buraya menü açma işlevi eklenebilir.');
-        });
-        
-        // **İyileştirme:** Kartın kendisine tıklanma özelliği eklendi.
-        cards.forEach(card => {
-            // Kartın içindeki "DEVAM ET" butonunu bul
-            const continueButton = card.querySelector('.btn-continue');
-            const cardTitle = card.querySelector('h3').textContent;
-
-            // 1. Kartın tam alanına tıklama işlevi
-            card.addEventListener('click', (event) => {
-                // Eğer tıklama zaten butonun kendisine yapılmışsa (veya içindeki bir elemente)
-                if (event.target.closest('.btn-continue')) {
-                    // Butonun kendi click olayını kullanmaya devam et
-                    return; 
-                }
-                openDetailPage(cardTitle);
-            });
-
-            // 2. Butonun kendi click işlevi (varsa data-attribute kullanıldı)
-            continueButton.addEventListener('click', () => {
-                openDetailPage(cardTitle);
-            });
-        });
-        
-    </script>
-    // --- YENİ EKLEME BAŞLANGICI: Akademik Fiiller Veri Yapısı ve Entegrasyonu ---
-
-const data = {
-    "Akademik Fiiller": {
-        "total_words": 50, // Toplam kelime sayısı güncellendi (Sadece Ünite 1 için)
-        "learned_words": 0, // Başlangıçta 0 olarak ayarlandı
-        "units": [
-            {
-                "unit_number": 1,
-                "unit_title": "Temel Akademik Kavramlar",
-                "words_in_unit": 50,
-                "learned_in_unit": 0,
-                "color_class": "u2", // Ünite 1 için mavi renk (u2) seçildi.
-                "words": [
-                    { "en": "Analyze", "pr": "enılayz", "tr": "Analiz Etmek" },
-                    { "en": "Identify", "pr": "aydentifay", "tr": "Tanımlamak, Belirlemek" },
-                    { "en": "Determine", "pr": "dıtörmin", "tr": "Saptamak, Karar Vermek" },
-                    { "en": "Establish", "pr": "estebliş", "tr": "Kurmak, Oluşturmak, Saptamak" },
-                    { "en": "Investigate", "pr": "invesztigeyt", "tr": "Araştırmak, İncelemek" },
-                    { "en": "Illustrate", "pr": "ilıstreyz", "tr": "Örneklemek, Resimlemek, Açıklamak" },
-                    { "en": "Demonstrate", "pr": "demınstreyt", "tr": "Göstermek, Kanıtlamak" },
-                    { "en": "Evaluate", "pr": "ivelüeyt", "tr": "Değerlendirmek" },
-                    { "en": "Synthesize", "pr": "sintısayz", "tr": "Sentezlemek" },
-                    { "en": "Formulate", "pr": "formyuleyt", "tr": "Formüle Etmek, Geliştirmek" },
-                    { "en": "Define", "pr": "difayn", "tr": "Tanımlamak" },
-                    { "en": "Compare", "pr": "kompeyır", "tr": "Karşılaştırmak" },
-                    { "en": "Contrast", "pr": "kontraszt", "tr": "Karşıtlık Kurmak" },
-                    { "en": "Argue", "pr": "argyuu", "tr": "Tartışmak, İddia Etmek" },
-                    { "en": "Support", "pr": "sıport", "tr": "Desteklemek" },
-                    { "en": "Challenged", "pr": "çelıncd", "tr": "Sorgulamak, Meydan Okumak" },
-                    { "en": "Derive", "pr": "dirayv", "tr": "Türetmek, Elde Etmek" },
-                    { "en": "Indicate", "pr": "indikey", "tr": "İşaret Etmek, Göstermek" },
-                    { "en": "Suggest", "pr": "sıces", "tr": "Öne Sürmek, Önermek" },
-                    { "en": "Conclude", "pr": "konklud", "tr": "Sonuçlandırmak" },
-                    { "en": "Perceive", "pr": "pörsiv", "tr": "Algılamak" },
-                    { "en": "Propose", "pr": "propouz", "tr": "Teklif Etmek, Önermek" },
-                    { "en": "Observe", "pr": "obzörv", "tr": "Gözlemlemek" },
-                    { "en": "Examine", "pr": "egzemin", "tr": "İncelemek, Muayene Etmek" },
-                    { "en": "Apply", "pr": "ıplay", "tr": "Uygulamak" },
-                    { "en": "Implement", "pr": "implimınt", "tr": "Uygulamaya Koymak" },
-                    { "en": "Reflect", "pr": "riflekt", "tr": "Yansıtmak, Düşünmek" },
-                    { "en": "Relate", "pr": "rıleyt", "tr": "İlişkilendirmek" },
-                    { "en": "Discuss", "pr": "diskasıs", "tr": "Tartışmak" },
-                    { "en": "Differentiate", "pr": "difırınşiyeyt", "tr": "Ayırt Etmek" },
-                    { "en": "Validate", "pr": "velideyt", "tr": "Doğrulamak, Onaylamak" },
-                    { "en": "Generate", "pr": "cenereyt", "tr": "Üretmek, Oluşturmak" },
-                    { "en": "Evolve", "pr": "ivolv", "tr": "Gelişmek, Evrilmek" },
-                    { "en": "Comprise", "pr": "komprayz", "tr": "İçermek, Kapsamak" },
-                    { "en": "Precede", "pr": "prisiid", "tr": "Önce Gelmek" },
-                    { "en": "Succeed", "pr": "sıksiid", "tr": "Başarılı Olmak, Yerine Geçmek" },
-                    { "en": "Cite", "pr": "sayt", "tr": "Alıntı Yapmak" },
-                    { "en": "Integrate", "pr": "intigreyt", "tr": "Bütünleştirmek" },
-                    { "en": "Modify", "pr": "modıfay", "tr": "Değiştirmek, Uyarlamak" },
-                    { "en": "Replicate", "pr": "replikeyt", "tr": "Tekrarlamak, Çoğaltmak" },
-                    { "en": "Signify", "pr": "signifay", "tr": "İfade Etmek, Anlamına Gelmek" },
-                    { "en": "Account for", "pr": "ekaunt for", "tr": "Açıklamak, Sorumlu Olmak" },
-                    { "en": "Assess", "pr": "ases", "tr": "Değer Biçmek, Değerlendirmek" },
-                    { "en": "Contribute", "pr": "kontribüut", "tr": "Katkıda Bulunmak" },
-                    { "en": "Correlate", "pr": "korıleyt", "tr": "İlişkilendirmek, Korelasyon Kurmak" },
-                    { "en": "Emphasize", "pr": "emfısayz", "tr": "Vurgulamak" },
-                    { "en": "Extract", "pr": "ekstrakt", "tr": "Çıkarmak, Özütlemek" },
-                    { "en": "Hypothesize", "pr": "haypıthısayz", "tr": "Hipotez Kurmak" },
-                    { "en": "Justify", "pr": "castifay", "tr": "Gerekçelendirmek" },
-                    { "en": "Reveal", "pr": "rivil", "tr": "Ortaya Çıkarmak, Açığa Vurmak" }
-                ]
-            }
-            // İleride buraya Ünite 2, Ünite 3 vb. eklenebilir.
-        ]
-    }
-    // Diğer kart kategorileri buraya eklenebilir.
-};
-
-// Seçilen veriyi tutmak için değişken
-let currentCardData = null;
-
-// Mevcut openDetailPage fonksiyonunun üzerine yazılır veya içine entegre edilir.
-// Burası, kullanıcı bir kartı tıkladığında çalışır.
-function openDetailPage(title) {
-    
-    // Veri kontrolü ve atama
-    const cardData = data[title];
-    if (cardData) {
-        currentCardData = cardData; // Seçilen veriyi global değişkene ata
-        updateDetailPage(cardData); // Detay sayfasını güncel verilerle doldur
-    } else {
-        // Eğer data objesinde veri yoksa, mevcut HTML'deki varsayılan yapıyı korur.
-        currentCardData = null; 
-    }
-
-    // Geri kalan sayfa geçiş işlemleri
-    homePage.classList.remove('active');
-    detailPage.classList.add('active');
-    backButton.style.display = 'block';
-    menuIcon.style.display = 'none';
-    headerTitle.textContent = title;
-    window.scrollTo(0, 0);
-}
-
-// Detay sayfasının içeriğini güncelleyen yeni fonksiyon
-function updateDetailPage(data) {
-    
-    // 1. İlerleme Yüzdelerini Güncelle
-    const learnedPercentage = data.total_words > 0 
-        ? Math.floor((data.learned_words / data.total_words) * 100) 
-        : 0;
-
-    // Şimdilik "Doğru yanıtlar" için varsayılan bir değer kullanıyoruz,
-    // gerçek uygulamada bu değer dinamik olmalıdır.
-    const correctAnswersPercentage = learnedPercentage; 
-
-    document.querySelector('.percentage-row .percentage-value:nth-child(1)').textContent = `% ${correctAnswersPercentage}`;
-    document.querySelector('.percentage-row .percentage-value:nth-child(2)').textContent = `% ${learnedPercentage}`;
-
-    // 2. Timeline (Ünite Listesi) Alanını Güncelle
-    const timeline = document.querySelector('.timeline');
-    timeline.innerHTML = ''; // Mevcut üniteleri temizle (statik HTML'deki 20 üniteyi)
-
-    data.units.forEach(unit => {
-        const unitItem = document.createElement('div');
-        unitItem.classList.add('unit-item');
-        unitItem.setAttribute('onclick', `alert('Ünite ${unit.unit_number} çalışmasına başla! (${unit.words_in_unit} kelime)')`);
-        
-        const learnedInfo = `${unit.learned_in_unit}/${unit.words_in_unit} öğrenildi.`;
-
-        unitItem.innerHTML = `
-            <div class="unit-circle ${unit.color_class}">${unit.unit_number}</div>
-            <div class="unit-content">
-                <div class="unit-title">Ünite ${unit.unit_number}: ${unit.unit_title}</div>
-                <div class="unit-subtitle">${learnedInfo}</div>
-            </div>
-        `;
-        timeline.appendChild(unitItem);
-    });
-
-    // Eğer verideki ünite sayısı statik HTML'deki ünite sayısından azsa,
-    // timeline çizgisinin kesilmesini sağlamak için son elemanın ::before kuralını kaldırmak gerekebilir.
-    // CSS'te :not(:last-child)::before kuralı bunu otomatik hallediyor.
-}
+        // Sayfa Elemanlarını Seç
+        const homePage = document.getElementById('home-page');
+        const detailPage = document.getElementById('detail-page');
+        const backButton = document.getElementById('back-button');
+        const menuIcon = document.getElementById('menu-icon');
+        const headerTitle = document.querySelector('header h1');
+        const cards = document.querySelectorAll('.card');
+        const unitTimeline = document.getElementById('unit-timeline');
+        const wordListContainer = document.getElementById('word-list-container');
 
 
-// Ana Sayfa Kart Verilerini Güncelleyen Fonksiyon (Sayfa Yüklenirken)
-function updateHomePageCard() {
-    const cardElement = Array.from(cards).find(card => 
-        card.querySelector('h3').textContent === "Akademik Fiiller"
-    );
+        // Kelime listesini oluşturan fonksiyon
+        function renderWordList(unitIndex) {
+            wordListContainer.innerHTML = ''; // Önceki kelimeleri temizle
+            if (!activeCardId) return;
 
-    if (cardElement && data["Akademik Fiiller"]) {
-        const cardData = data["Akademik Fiiller"];
-        const learned = cardData.learned_words;
-        const total = cardData.total_words;
-        const percentage = total > 0 ? Math.floor((learned / total) * 100) : 0;
-        
-        // Kart içeriğini güncelle
-        cardElement.querySelector('p').textContent = `${total} kelimeden ${learned} tanesi öğrenildi.`;
-        cardElement.querySelector('.progress-fill').style.width = `${percentage}%`;
-    }
-}
+            const unitData = wordData[activeCardId][unitIndex];
+            
+            if (unitData && unitData.words.length > 0) {
+                unitData.words.forEach(word => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('word-item');
+                    listItem.innerHTML = `
+                        <div class="word-details">
+                            <span class="word-english">${word.en}</span>
+                            <span class="word-pronunciation">[${word.pr}]</span>
+                        </div>
+                        <span class="word-turkish">${word.tr}</span>
+                    `;
+                    wordListContainer.appendChild(listItem);
+                });
+            } else {
+                wordListContainer.innerHTML = '<li style="text-align: center; color: #888; padding: 20px;">Bu ünitede gösterilecek kelime yok.</li>';
+            }
+        }
 
-// Sayfa yüklendiğinde, Ana Sayfa kartını yeni verilerle güncelle
-window.addEventListener('load', updateHomePageCard);
+        // Ünite listesini oluşturan fonksiyon
+        function renderUnitTimeline(cardId) {
+            unitTimeline.innerHTML = ''; // Önceki üniteleri temizle
+            wordListContainer.innerHTML = ''; // Kelime listesini temizle
+            
+            const units = wordData[cardId];
+            if (!units) return;
 
-// --- YENİ EKLEME BİTİŞİ ---
+            units.forEach((unit, index) => {
+                const unitItem = document.createElement('div');
+                unitItem.classList.add('unit-item');
+                unitItem.classList.add('u' + unit.unit % 20); // Renk sınıflarını döngüsel kullan
+                unitItem.setAttribute('data-unit-index', index);
+                unitItem.onclick = function() { selectUnit(index); }; // Tıklama işlevi eklendi
+                unitItem.innerHTML = `
+                    <div class="unit-circle u${unit.unit % 20}">${unit.unit}</div>
+                    <div class="unit-content">
+                        <div class="unit-title">Ünite ${unit.unit}</div>
+                        <div class="unit-subtitle">${unit.learnedWords}/${unit.totalWords} öğrenildi.</div>
+                    </div>
+                `;
+                unitTimeline.appendChild(unitItem);
+            });
+            
+            // Başlangıçta 1. üniteyi seç
+            selectUnit(0);
+        }
 
-// Geri kalan mevcut kodunuz (backButton, menuIcon ve cards.forEach) aynen kalır.
+        // Ünite Seçme Fonksiyonu
+        function selectUnit(index) {
+            // Tüm ünite öğelerinden 'active' sınıfını kaldır
+            document.querySelectorAll('.unit-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Seçili üniteye 'active' sınıfını ekle (isteğe bağlı, CSS'te bu sınıfın stili tanımlanmadı ama ekledim)
+            const selectedUnit = document.querySelector(`.unit-item[data-unit-index="${index}"]`);
+            if (selectedUnit) {
+                selectedUnit.classList.add('active');
+            }
+            
+            // Seçili ünitenin kelime listesini göster
+            renderWordList(index);
+        }
+
+        // Detay Sayfasını Açan Fonksiyon
+        function openDetailPage(title, cardId) {
+            activeCardId = cardId; // Aktif kart ID'sini kaydet
+            
+            // Önceki sayfayı kapat
+            homePage.classList.remove('active');
+            
+            // Yeni sayfayı aç
+            detailPage.classList.add('active');
+            
+            // Header'ı güncelle: Geri butonu görünür, menü gizlenir.
+            backButton.style.display = 'block';
+            menuIcon.style.display = 'none';
+
+            // Başlığı seçilen kart başlığı ile değiştir
+            headerTitle.textContent = title; 
+            
+            // İlgili ünite listesini yükle
+            renderUnitTimeline(cardId);
+            
+            // Sayfanın en üstüne kaydır
+            window.scrollTo(0, 0);
+        }
+
+        // Ana Sayfaya Dönen Fonksiyon
+        function goHome() {
+            activeCardId = null; // Aktif kart ID'sini sıfırla
+            
+            // Önceki sayfayı kapat
+            detailPage.classList.remove('active');
+            
+            // Yeni sayfayı aç
+            homePage.classList.add('active');
+
+            // Header'ı güncelle: Geri butonu gizlenir, menü görünür.
+            backButton.style.display = 'none';
+            menuIcon.style.display = 'block';
+
+            // Başlığı ana sayfa başlığına geri getir
+            headerTitle.textContent = "EnglishBox"; 
+            
+            // Detay sayfasındaki üniteleri temizle
+            unitTimeline.innerHTML = '';
+            wordListContainer.innerHTML = '';
+
+        }
+
+        // Geri butonuna tıklama olayı
+        backButton.addEventListener('click', goHome);
+        
+        // Menü ikonuna tıklama olayı (Şimdilik uyarı mesajı)
+        menuIcon.addEventListener('click', () => {
+             alert('Menü Tıklandı. Buraya menü açma işlevi eklenebilir.');
+        });
+        
+        // Kart ve Buton Tıklama Olayları
+        cards.forEach(card => {
+            const continueButton = card.querySelector('.btn-continue');
+            const cardTitle = card.querySelector('h3').textContent;
+            // data-card-id'yi butondan al
+            const cardId = continueButton.getAttribute('data-card-id');
+
+            // 1. Kartın tam alanına tıklama işlevi
+            card.addEventListener('click', (event) => {
+                // Eğer tıklama zaten butonun kendisine yapılmışsa (veya içindeki bir elemente)
+                if (event.target.closest('.btn-continue')) {
+                    return; 
+                }
+                openDetailPage(cardTitle, cardId);
+            });
+
+            // 2. Butonun kendi click işlevi
+            continueButton.addEventListener('click', () => {
+                openDetailPage(cardTitle, cardId);
+            });
+        });
+        
+    </script>
 
 </body>
 </html>
