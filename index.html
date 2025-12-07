@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnglishBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* GENEL AYARLAR */
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f2f2f7; /* Hafif gri arka plan */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Üstten başla */
+            min-height: 100vh;
+        }
+
+        /* MOBİL GÖRÜNÜM KONTEYNERİ */
+        .mobile-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            min-height: 800px; 
+            padding-bottom: 20px; 
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #fff; /* Header arka planı beyaz yapıldı */
+            border-bottom: 1px solid #eee;
+            position: sticky; /* Sticky header yapıldı */
+            top: 0;
+            z-index: 10;
+        }
+        header h1 { font-size: 18px; font-weight: bold; }
+        .crown-icon { color: #f1c40f; font-size: 20px; }
+        #menu-icon { color: #555; cursor: pointer; } 
+
+        /* SAYFA YAPISI */
+        .page {
+            display: none;
+            /* Sayfa geçiş animasyonu için opacity eklendi */
+            opacity: 0; 
+            transition: opacity 0.3s ease;
+            width: 100%; /* Sayfaların genişliği ayarlandı */
+        }
+        .page.active {
+            display: block;
+            opacity: 1; /* Görünür olduğunda tamamen belirir */
+        }
+
+        /* --- SAYFA 1: ANA LİSTE (HOME) --- */
+        .card {
+            background: #fff;
+            margin: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            overflow: hidden;
+            cursor: pointer; /* Tıklanabilir olduğunu belirtir */
+        }
+        /* Kartın üzerine gelme/tıklama efekti */
+        .card:active {
+            transform: scale(0.99);
+        }
+        .card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card-content {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+            flex-shrink: 0; /* İkonun küçülmesini engeller */
+        }
+        /* İkon Renkleri (Görsel tutarlılık için) */
+        .icon-verb { background-color: #34495e; }
+        .icon-noun { background-color: #e91e63; }
+        .icon-adj { background-color: #2ecc71; }
+        .icon-adv { background-color: #e67e22; }
+        .icon-conj { background-color: #9b59b6; }
+        .icon-phrasal { background-color: #3498db; }
+
+
+        .card-info { flex-grow: 1; }
+        .card-info h3 { font-size: 16px; margin-bottom: 5px; color: #333; }
+        .card-info p { font-size: 13px; color: #888; margin-bottom: 8px; }
+
+        .progress-bar {
+            height: 6px;
+            background-color: #eee;
+            border-radius: 3px;
+            width: 100%;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #3498db; 
+            width: 0%; 
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .btn-continue {
+            width: 100%;
+            padding: 12px;
+            background: #fff;
+            border: none;
+            border-top: 1px solid #eee;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-continue:hover { background-color: #f5f5f5; }
+        .btn-continue:active { background-color: #e0e0e0; }
+
+        /* --- SAYFA 2: DETAY (UNITS) --- */
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 10px; /* Kenar boşlukları azaltıldı */
+            background: #fff;
+            margin-bottom: 10px;
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 30%;
+            cursor: pointer;
+        }
+        .stat-item:hover .stat-icon-circle {
+             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .stat-icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            margin-bottom: 8px;
+            transition: box-shadow 0.2s;
+        }
+        .stat-text { font-size: 11px; color: #666; line-height: 1.2; }
+        
+        .bg-yellow { background-color: #f1c40f; }
+        .bg-red { background-color: #e74c3c; }
+        .bg-green { background-color: #a3cb38; }
+
+        .percentage-row {
+            display: flex;
+            justify-content: space-between; /* İki tarafı ayırır */
+            padding: 10px 20px;
+            background: #fff;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+        .percentage-row span {
+            color: #f39c12; /* Yüzde kısmı turuncu */
+        }
+
+
+        /* Timeline / Ünite Listesi */
+        .timeline {
+            padding: 0 20px;
+        }
+        .unit-item {
+            display: flex;
+            align-items: flex-start;
+            position: relative;
+            padding-bottom: 30px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border-radius: 8px;
+            padding: 10px 0;
+            margin-bottom: 5px;
+        }
+        .unit-item:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 30px; /* Unit circle merkezine göre ayarlandı */
+            top: 50px;
+            bottom: -5px; /* Üstteki padding'e göre ayarlandı */
+            width: 2px;
+            border-left: 2px dotted #ddd;
+            z-index: 1;
+        }
+        .unit-item:hover { background-color: #f9f9f9; }
+
+        .unit-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: bold;
+            flex-shrink: 0;
+            z-index: 2;
+            margin-left: 0; /* Sol boşluk ayarlandı */
+        }
+        .unit-content {
+            margin-left: 15px;
+            padding-top: 0; /* Başlıklar ortalanacak şekilde ayarlandı */
+        }
+        .unit-title { font-weight: bold; font-size: 16px; color: #333; }
+        .unit-subtitle { font-size: 13px; color: #999; margin-top: 4px; }
+
+        /* Ünite Renkleri (Mevcut renk döngüsü korundu) */
+        .u1, .u6, .u11, .u16 { background-color: #e91e63; } /* Pembe */
+        .u2, .u7, .u12, .u17 { background-color: #3498db; } /* Mavi */
+        .u3, .u8, .u13, .u18 { background-color: #000; }    /* Siyah */
+        .u4, .u9, .u14, .u19 { background-color: #8bc34a; } /* Yeşil */
+        .u5, .u10, .u15, .u20 { background-color: #e67e22; } /* Turuncu */
+
+        /* Geri butonu için stil */
+        .back-button { 
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #333;
+            padding: 0;
+            margin-right: 15px; /* Başlıktan ayırma */
+            display: none; /* Varsayılan olarak gizli */
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        
+        <header>
+            <div class="header-content">
+                <button id="back-button" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <i class="fas fa-bars" id="menu-icon"></i>
+                <h1 style="margin-left: 15px;">EnglishBox</h1>
+            </div>
+            <i class="fas fa-crown crown-icon"></i>
+        </header>
+
+        <div id="home-page" class="page active">
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-verb">
+                        <i class="fas fa-book-open"></i> </div>
+                    <div class="card-info">
+                        <h3>İleri Düzey Akademik Fiiller</h3>
+                        <p>435 kelimeden 21 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 5%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="openDetailPage('İleri Düzey Akademik Fiiller')">DEVAM ET</button>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-verb">
+                        <i class="fas fa-running"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik Fiiller</h3>
+                        <p>380 kelimeden 19 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 5%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="openDetailPage('Akademik Fiiller')">DEVAM ET</button>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-verb">
+                        <i class="fas fa-running"></i> </div>
+                    <div class="card-info">
+                        <h3>En Çok Kullanılan Fiiller</h3>
+                        <p>180 kelimeden 18 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 10%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="openDetailPage('En Çok Kullanılan Fiiller')">DEVAM ET</button>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-adj">
+                        <i class="fas fa-star"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik Sıfatlar</h3>
+                        <p>300 kelimeden 0 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="openDetailPage('Akademik Sıfatlar')">DEVAM ET</button>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-noun">
+                        <i class="fas fa-building"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik İsimler</h3>
+                        <p>400 kelimeden 0 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="openDetailPage('Akademik İsimler')">DEVAM ET</button>
+            </div>
+            
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-conj">
+                        <i class="fas fa-link"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik Bağlaçlar</h3>
+                        <p>90 kelimeden 0 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="openDetailPage('Akademik Bağlaçlar')">DEVAM ET</button>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-phrasal">
+                        <i class="fas fa-dice"></i> </div>
+                    <div class="card-info">
+                        <h3>Öbek Fiiller</h3>
+                        <p>200 kelimeden 0 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="openDetailPage('Öbek Fiiller')">DEVAM ET</button>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-adv">
+                        <i class="fas fa-clock"></i> </div>
+                    <div class="card-info">
+                        <h3>Akademik Zarflar</h3>
+                        <p>300 kelimeden 0 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="openDetailPage('Akademik Zarflar')">DEVAM ET</button>
+            </div>
+
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-icon-wrapper icon-noun">
+                        <i class="fas fa-users"></i> </div>
+                    <div class="card-info">
+                        <h3>En Çok Kullanılan İsimler</h3>
+                        <p>200 kelimeden 30 tanesi öğrenildi.</p>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 15%"></div></div>
+                    </div>
+                </div>
+                <button class="btn-continue" onclick="openDetailPage('En Çok Kullanılan İsimler')">DEVAM ET</button>
+            </div>
+            
+        </div>
+
+        <div id="detail-page" class="page">
+            
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-icon-circle bg-yellow"><i class="fas fa-thumbtack"></i></div>
+                    <div class="stat-text">Unutulabilecek<br>Kelimeler</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon-circle bg-red"><i class="fas fa-times"></i></div>
+                    <div class="stat-text">Sık Yanlış<br>Cevaplananlar</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon-circle bg-green"><i class="fas fa-random"></i></div>
+                    <div class="stat-text">Karışık Tekrar<br>Çalışması</div>
+                </div>
+            </div>
+
+            <div class="percentage-row">
+                <span>% 10 <span style="font-weight:normal; color:#666; font-size:12px;">Doğru yanıtlar</span></span>
+                <span>% 5 <span style="font-weight:normal; color:#666; font-size:12px;">Öğrenilenlerin oranı</span></span>
+            </div>
+
+            <div class="timeline">
+                <div class="unit-item" onclick="alert('Ünite 1 çalışmasına başla!')">
+                    <div class="unit-circle u1">1</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 1</div><div class="unit-subtitle">1/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 2 çalışmasına başla!')">
+                    <div class="unit-circle u2">2</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 2</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 3 çalışmasına başla!')">
+                    <div class="unit-circle u3">3</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 3</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 4 çalışmasına başla!')">
+                    <div class="unit-circle u4">4</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 4</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 5 çalışmasına başla!')">
+                    <div class="unit-circle u5">5</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 5</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 6 çalışmasına başla!')">
+                    <div class="unit-circle u6">6</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 6</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 7 çalışmasına başla!')">
+                    <div class="unit-circle u7">7</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 7</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 8 çalışmasına başla!')">
+                    <div class="unit-circle u8">8</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 8</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 9 çalışmasına başla!')">
+                    <div class="unit-circle u9">9</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 9</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 10 çalışmasına başla!')">
+                    <div class="unit-circle u10">10</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 10</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 11 çalışmasına başla!')">
+                    <div class="unit-circle u11">11</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 11</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 12 çalışmasına başla!')">
+                    <div class="unit-circle u12">12</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 12</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 13 çalışmasına başla!')">
+                    <div class="unit-circle u13">13</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 13</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 14 çalışmasına başla!')">
+                    <div class="unit-circle u14">14</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 14</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 15 çalışmasına başla!')">
+                    <div class="unit-circle u15">15</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 15</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 16 çalışmasına başla!')">
+                    <div class="unit-circle u16">16</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 16</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 17 çalışmasına başla!')">
+                    <div class="unit-circle u17">17</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 17</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 18 çalışmasına başla!')">
+                    <div class="unit-circle u18">18</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 18</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 19 çalışmasına başla!')">
+                    <div class="unit-circle u19">19</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 19</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+                <div class="unit-item" onclick="alert('Ünite 20 çalışmasına başla!')">
+                    <div class="unit-circle u20">20</div>
+                    <div class="unit-content"><div class="unit-title">Ünite 20</div><div class="unit-subtitle">0/20 öğrenildi.</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sayfa Elemanlarını Seç
+        const homePage = document.getElementById('home-page');
+        const detailPage = document.getElementById('detail-page');
+        const backButton = document.getElementById('back-button');
+        const menuIcon = document.getElementById('menu-icon');
+        const headerTitle = document.querySelector('header h1');
+        
+        // Detay Sayfasını Açan Fonksiyon
+        function openDetailPage(title) {
+            // Önceki sayfayı kapat
+            homePage.classList.remove('active');
+            
+            // Yeni sayfayı aç
+            detailPage.classList.add('active');
+            
+            // Header'ı güncelle: Geri butonu görünür, menü gizlenir.
+            backButton.style.display = 'block';
+            menuIcon.style.display = 'none';
+
+            // Başlığı seçilen kart başlığı ile değiştir
+            headerTitle.textContent = title; 
+            
+            // Sayfanın en üstüne kaydır
+            window.scrollTo(0, 0);
+        }
+
+        // Ana Sayfaya Dönen Fonksiyon
+        function goHome() {
+            // Önceki sayfayı kapat
+            detailPage.classList.remove('active');
+            
+            // Yeni sayfayı aç
+            homePage.classList.add('active');
+
+            // Header'ı güncelle: Geri butonu gizlenir, menü görünür.
+            backButton.style.display = 'none';
+            menuIcon.style.display = 'block';
+
+            // Başlığı ana sayfa başlığına geri getir
+            headerTitle.textContent = "EnglishBox"; 
+        }
+
+        // Geri butonuna tıklama olayı
+        backButton.addEventListener('click', goHome);
+        
+        // Menü ikonuna tıklama olayı (Şimdilik uyarı mesajı)
+        menuIcon.addEventListener('click', () => {
+             alert('Menü Tıklandı. Buraya menü açma işlevi eklenebilir.');
+        });
+        
+        // Kartın kendisine tıklanma özelliği eklenmediği için, sadece butona tıklanıyor. 
+        // Eğer kartın kendisine tıklanmasını isterseniz:
+        // const cards = document.querySelectorAll('.card');
+        // cards.forEach(card => {
+        //     card.addEventListener('click', (event) => {
+        //         // Eğer tıklama DEVAM ET butonu değilse çalışır
+        //         if (!event.target.classList.contains('btn-continue')) {
+        //             const title = card.querySelector('h3').textContent;
+        //             openDetailPage(title);
+        //         }
+        //     });
+        // });
+        
+    </script>
+
+</body>
+</html>
