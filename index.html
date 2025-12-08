@@ -40,7 +40,8 @@
             position: relative;
             overflow: hidden;
             min-height: 800px;
-            padding-bottom: 0;
+            /* Footer boşluğu için (Sadece Quiz butonu kaldı) */
+            padding-bottom: 0; 
         }
 
         /* HEADER */
@@ -71,7 +72,8 @@
             height: 100%;
             min-height: calc(800px - 50px);
             position: relative;
-            padding-bottom: 160px;
+            /* SADECE QUIZ BUTONUNA YETECEK KADAR BOŞLUK */
+            padding-bottom: 85px; 
         }
 
         /* KART STİLLERİ */
@@ -118,7 +120,7 @@
         .percentage-row .percentage-value { color: #f39c12; }
         .percentage-row .label { font-weight: normal; color: #666; font-size: 12px; }
 
-        /* Timeline / Ünite Listesi - GÜNCELLENDİ */
+        /* Timeline / Ünite Listesi */
         .timeline { padding: 0 20px; }
         .unit-item {
             display: flex;
@@ -128,10 +130,10 @@
             cursor: pointer;
             transition: background-color 0.2s;
             border-radius: 8px;
-            margin-bottom: 8px; /* Kartlar arasına boşluk eklendi */
+            margin-bottom: 8px;
             opacity: 1; 
-            background-color: #fff; /* Arka plan beyaz */
-            border: 1px solid var(--color-light-gray); /* Çerçeve */
+            background-color: #fff;
+            border: 1px solid var(--color-light-gray);
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
         }
         .unit-item.selected {
@@ -139,7 +141,7 @@
             border: 1px solid #cceeff;
         }
         .unit-item:not(:last-child)::before {
-            content: none; /* Dikey çizgi kaldırıldı */
+            content: none;
         }
         .unit-item:hover { background-color: #f9f9f9; }
 
@@ -148,7 +150,6 @@
         .unit-title { font-weight: bold; font-size: 16px; color: var(--color-dark); }
         .unit-subtitle { font-size: 13px; color: #999; margin-top: 4px; }
         
-        /* Ünite Renkleri (Sadece daireler için kaldı) */
         .u1, .u6, .u11, .u16 { background-color: #e91e63; }
         .u2, .u7, .u12, .u17 { background-color: var(--color-primary); }
         .u3, .u8, .u13, .u18 { background-color: #000; }
@@ -162,10 +163,23 @@
         .unit-detail-info h2 { font-size: 24px; color: var(--color-dark); margin-bottom: 5px; }
         .unit-detail-info p { font-size: 14px; color: #888; margin-bottom: 20px; }
         
-        .bottom-actions { position: absolute; bottom: 0; left: 0; width: 100%; background-color: #fff; padding: 15px 20px; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 100; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+        /* GÜNCELLENDİ: Sadece Quiz butonu için footer stili */
+        .bottom-actions { 
+            position: absolute; 
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.05); 
+            z-index: 100;
+            display: flex;
+            flex-direction: column; 
+            gap: 10px; 
+            flex-shrink: 0;
+        }
         .action-button { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: bold; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; margin: 0; }
         .btn-quiz { background-color: var(--color-green); }
-        .btn-list { background-color: #34495e; }
 
         .unit-word-list { padding: 0 15px 10px 15px; overflow-y: auto; flex-grow: 1; }
         
@@ -253,8 +267,9 @@
             <div class="unit-word-list" id="word-list-container"></div>
 
             <div class="bottom-actions">
-                <button class="action-button btn-quiz" onclick="alert('Quiz başlatıldı!')"><i class="fas fa-question-circle"></i> Quiz Çöz</button>
-                <button class="action-button btn-list" onclick="document.getElementById('word-list-container').scrollIntoView({behavior: 'smooth'})"><i class="fas fa-list"></i> Kelime Listesine Bak</button>
+                <button class="action-button btn-quiz" onclick="alert('Quiz başlatıldı!')">
+                    <i class="fas fa-question-circle"></i> Quiz Çöz
+                </button>
             </div>
         </div>
     </div>
@@ -380,11 +395,8 @@
                 `;
                 unitTimeline.appendChild(unitItem);
             });
-
-            // selectUnit(0) çağrısı kaldırıldı.
         }
 
-        // Detay Sayfasına Yönlendirir (Ünite Listesi)
         function openDetailPage(title) {
             homePage.classList.remove('active');
             unitDetailPage.classList.remove('active'); 
