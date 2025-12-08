@@ -40,7 +40,6 @@
             position: relative;
             overflow: hidden;
             min-height: 800px;
-            /* Footer boşluğu için (Sadece Quiz butonu kaldı) */
             padding-bottom: 0; 
         }
 
@@ -72,7 +71,7 @@
             height: 100%;
             min-height: calc(800px - 50px);
             position: relative;
-            /* SADECE QUIZ BUTONUNA YETECEK KADAR BOŞLUK */
+            /* Sabit butonun yerini açmak için padding eklendi */
             padding-bottom: 85px; 
         }
 
@@ -147,7 +146,7 @@
 
         .unit-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: bold; flex-shrink: 0; z-index: 2; }
         .unit-content { margin-left: 15px; }
-        .unit-title { font-weight: bold; font-size: 16px; color: var(--color-dark); }
+        .unit-title { font-weight: bold; color: var(--color-dark); font-size: 16px; }
         .unit-subtitle { font-size: 13px; color: #999; margin-top: 4px; }
         
         .u1, .u6, .u11, .u16 { background-color: #e91e63; }
@@ -163,15 +162,17 @@
         .unit-detail-info h2 { font-size: 24px; color: var(--color-dark); margin-bottom: 5px; }
         .unit-detail-info p { font-size: 14px; color: #888; margin-bottom: 20px; }
         
-        /* GÜNCELLENDİ: Sadece Quiz butonu için footer stili */
+        /* GÜNCELLENDİ: Butonu sabitlemek için 'position: fixed;' ve merkezleme eklendi. */
         .bottom-actions { 
-            position: absolute; 
-            bottom: 0;
-            left: 0;
+            position: fixed; 
+            bottom: 0; 
+            left: 50%; 
+            transform: translateX(-50%);
             width: 100%;
+            max-width: 400px;
             background-color: #fff;
             padding: 15px 20px;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.05); 
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1); 
             z-index: 100;
             display: flex;
             flex-direction: column; 
